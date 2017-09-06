@@ -1,4 +1,5 @@
-source ~/.profile
+source ~/.aliases
+source ~/.exports
 export EDITOR="subl -w"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export PATH=/usr/local/sbin:~/.bin:~/.composer/vendor/bin:$PATH
