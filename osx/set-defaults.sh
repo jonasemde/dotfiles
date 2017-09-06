@@ -4,6 +4,12 @@ echo 'start osx/set-defaults.sh'
 # Ask for the administrator password upfront
 sudo -v
 
+# Set computer name (as done via System Preferences → Sharing)
+sudo scutil --set ComputerName "Jonas MBP"
+sudo scutil --set HostName "jonas-mbp"
+sudo scutil --set LocalHostName "JonasMBP"
+sudo dscacheutil -flushcache
+
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
