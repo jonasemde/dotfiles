@@ -37,7 +37,6 @@ plugins=(git laravel4 laravel5 composer osx vagrant)
 
 source $ZSH/oh-my-zsh.sh
 
-export=Users/$DEFAULT_USER/.rvm/gems/ruby-2.1.2/bin:$PATH
 #set numeric keys
 # 0 . Enter
 bindkey -s "^[Op" "0"
@@ -72,18 +71,6 @@ for file in ~/.dotfiles-custom/shell/.{exports,aliases,functions}; do
 done
 unset file
 
-#load rvm
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
-
-export PATH="$PATH:$HOME/.rvm/bin"
-. $HOME/.dotfiles/shell/z.sh
-
-#alias hub to git
-eval "$(hub alias -s)"
-
-#sudoless npm https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
-NPM_PACKAGES="${HOME}/.npm-packages"
-PATH="$NPM_PACKAGES/bin:$PATH"
 # Unset manpath so we can inherit from /etc/manpath via the `manpath`
 # command
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
@@ -97,8 +84,3 @@ ssh-add -A 2>/dev/null;
 
 #setup xdebug
 export XDEBUG_CONFIG="remote_enable=1 remote_mode=req remote_port=9001 remote_host=127.0.0.1 remote_connect_back=0"
-
-
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH=/usr/local/bin:$PATH
-export PATH="$HOME/.yarn/bin:$PATH"

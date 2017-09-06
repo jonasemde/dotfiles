@@ -1,7 +1,6 @@
-dotfiles
-========
+# Jonas dotfiles
 
-My personal dotfiles. Also used by nearly all other geeks at [spatie.be](http://spatie.be) 
+My personal dotfiles. Also used by nearly all other geeks at [mindtwo.de](https://www.mindtwo.de) 
 
 You can install them by cloning the repository as '.dotfiles' in your homedirectory and running the bootstrap-script.
 
@@ -10,6 +9,5 @@ The bootstrap script can be run be cd-ing into the .dotfiles directory and perfo
 ./bootstrap
 ```
 
-Feel free to contact me if you have any questions about them.
-
-![zhs](http://freekmurze.github.io/dotfiles/images/zsh.png)
+## Thanks to…
+[freekmurze](https://github.com/freekmurze/dotfiles)

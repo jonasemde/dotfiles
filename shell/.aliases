@@ -1,25 +1,58 @@
-# PHP
-alias phpspec="vendor/bin/phpspec run"
-alias phpunit="vendor/bin/phpunit"
-alias phpunitw="phpunit-watcher watch"
-alias behat="vendor/bin/behat"
-alias a="php artisan"
-alias c="composer"
-alias cu="composer update"
-alias cr="composer require"
-alias ci="composer install"
-alias cda="composer dump-autoload -o"
-alias hostfile="sudo vi /etc/hosts"
-alias deploy='envoy run deploy'
-alias deploy-code='envoy run deploy-code'
+# Deployment
+alias d_twint_live="cd ~/Sites/twint.local && envoy run deploy_assets --env=live && envoy run deploy_live --env=live"
+alias d_twint_staging="cd ~/Sites/twint.local && envoy run deploy_assets --env=staging && envoy run deploy_staging --env=staging"
+alias d_twint_m2staging="cd ~/Sites/twint.local && envoy run deploy_assets_to_m2staging --env=m2staging && envoy run deploy_m2staging --env=m2staging"
+alias d_m2live="cd ~/Sites/agency-websites && envoy run deploy --env=live && gulp --production"
+alias d_m2dev="cd ~/Sites/agency-websites && envoy run deploy --env=dev && gulp"
+alias d_m2slive="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=live && gulp --production"
+alias d_m2sstaging="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=staging && gulp --production"
+alias d_svg_staging="cd ~/Sites/sous-vide-pro.local && envoy run deploy_assets_to_m2staging && envoy run deploy_m2staging"
 
-# js
-alias jest="./node_modules/.bin/jest"
+# Defaults
+alias np="source ~/.zshrc"
+alias profile="subl ~/.zshrc"
+alias hosts="subl /etc/hosts"
+alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
+alias fresh='clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias c='fresh'
+alias f='fresh'
+alias ls='ls -laF'
+alias h="cd ~/"
+alias p="cd ~/Sites/_phpstorm"
+alias s="cd ~/Sites/"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias find="grep '|'' ./* -R"
+alias wget="curl -O"
+alias update="brew upgrade && sudo npm i -g npm && sudo npm update -g && composer global update"
+
+# NPM, Composer & Laravel
+alias n_w='npm run watch'
+alias n_p='npm run production'
+alias n_d='npm run dev'
+alias c_u='composer update'
+alias c_i='composer install'
+alias c_da='composer dump-autoload'
+alias c_d='c_da'
+alias c_cc='composer clear-cache'
+alias c_c='c_cc'
+alias art="php artisan"
+alias a="art"
+alias art_mr='art migrate:refresh'
+alias amr='art_mr'
+alias art_cc='art cache:clear'
+alias acc='art_cc'
+alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
+alias vm="homestead up && homestead ssh"
 
 # git
-alias gc="git checkout"
 alias gpo="git push origin"
-alias gm="git merge"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Fast open
 alias o="open ."
@@ -27,7 +60,7 @@ alias o="open ."
 # List all files colorized in long format
 alias l="ls -laF"
 
-#phpstorm
+# PhpStorm
 alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
 
 # Show/hide hidden files in Finder
@@ -51,11 +84,5 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
-#git
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-
-# scrape webpage
+# Scrape webpage
 alias scrape="scrapeUrl"
-
-alias npmnpm="npm config set registry https://registry.npmjs.org"
-alias npmspatie="npm config set registry https://npm.spatie.be"
