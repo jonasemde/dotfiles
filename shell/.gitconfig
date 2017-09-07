@@ -6,7 +6,7 @@
 	ui = true
 [core]
 	editor = subl
-	excludesfile = $HOME/.global-gitignore
+	excludesfile = ~/.global-gitignore
 [diff]
 	tool = diffmerge
 [difftool "diffmerge"]
