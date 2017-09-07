@@ -176,6 +176,46 @@ echo 'install svgo'
 echo '------------'
 npm install -g svgo
 
+echo 'install system apps'
+echo '------------'
+brew cask install dropbox
+brew cask install slack
+brew cask install invisionsync
+brew cask install skype
+brew cask install sketch
+brew cask install chrome-devtools
+brew cask install google-chrome
+brew cask install firefox
+brew cask install opera
+brew cask install mamp
+brew cask install google-nik-collection
+brew cask install alfred
+brew cask install bartender
+brew cask install iterm2
+brew cask install tower
+brew cask install google-adwords-editor
+brew cask install google-hangouts
+brew cask install google-web-designer
+brew cask install google-backup-and-sync
+brew cask install sublime-text
+brew cask install phpstorm
+brew cask install coda
+brew cask install transmit
+brew cask install teamviewer
+brew cask install moom
+brew cask install querious
+brew cask install sequel-pro
+brew cask install spotify
+brew cask install postman
+brew cask install poedit
+brew cask install xmind
+brew cask install vlc
+brew cask install whatsapp
+brew cask install screaming-frog-seo-spider
+brew cask install jbidwatcher
+brew cask install jdownloader
+brew cask install evernote
+
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
 echo 'all done'
