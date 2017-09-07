@@ -93,6 +93,7 @@ echo 'install brew-cask'
 echo '------------------'
 brew tap caskroom/cask
 brew install brew-cask
+brew tap caskroom/versions
 
 echo 'install httrack'
 echo '-------------'
@@ -197,7 +198,7 @@ brew cask install google-adwords-editor
 brew cask install google-hangouts
 brew cask install google-web-designer
 brew cask install google-backup-and-sync
-brew cask install sublime-text
+brew cask install sublime-text-dev
 brew cask install phpstorm
 brew cask install coda
 brew cask install transmit
@@ -215,6 +216,11 @@ brew cask install screaming-frog-seo-spider
 brew cask install jbidwatcher
 brew cask install jdownloader
 brew cask install evernote
+brew cask install docker-edge
+brew cask install adobe-creative-cloud
+brew cask install docker-toolbox
+brew cask install calibre
+brew cask install colorsnapper
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
