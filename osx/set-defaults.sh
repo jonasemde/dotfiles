@@ -8,6 +8,7 @@ sudo -v
 sudo scutil --set ComputerName "Jonas MBP"
 sudo scutil --set HostName "jonas-mbp"
 sudo scutil --set LocalHostName "JonasMBP"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "jonas-mbp"
 sudo dscacheutil -flushcache
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
