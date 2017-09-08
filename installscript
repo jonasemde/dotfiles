@@ -30,10 +30,6 @@ rm $HOME/.vimrc
 ln -s $HOME/.dotfiles/shell/.vimrc $HOME/.vimrc
 
 #symlink yarn prefs
-rm $HOME/.yarnrc
-ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.yarnrc
-
-#symlink yarn prefs
 rm $HOME/.npmrc
 ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.npmrc
 
