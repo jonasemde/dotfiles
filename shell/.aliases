@@ -40,6 +40,7 @@ alias c_da='composer dump-autoload'
 alias c_d='c_da'
 alias c_cc='composer clear-cache'
 alias c_c='c_cc'
+alias c_gu='composer global update'
 alias art="php artisan"
 alias a="art"
 alias art_mr='art migrate:refresh'
