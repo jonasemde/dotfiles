@@ -6,6 +6,7 @@ alias d_m2live="cd ~/Sites/agency-websites && envoy run deploy --env=live && gul
 alias d_m2dev="cd ~/Sites/agency-websites && envoy run deploy --env=dev && gulp"
 alias d_m2slive="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=live && gulp --production"
 alias d_m2sstaging="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=staging && gulp --production"
+alias d_svg_live="cd ~/Sites/sous-vide-pro.local && envoy run deploy_assets_to_live && envoy run deploy_live --env=live"
 alias d_svg_staging="cd ~/Sites/sous-vide-pro.local && envoy run deploy_assets_to_m2staging && envoy run deploy_m2staging"
 
 # Defaults
