@@ -28,7 +28,7 @@ alias find="grep '|'' ./* -R"
 alias wget="curl -O"
 alias h="cd ~/"
 alias s="cd ~/Sites/"
-alias update="brew upgrade && sudo n latest && sudo npm i -g npm && sudo npm update -g && composer global update"
+alias update="brew upgrade && sudo n latest && sudo npm update && sudo npm i -g npm -g && composer global update"
 
 # NPM, Composer & Laravel
 alias n_w='npm run watch'
