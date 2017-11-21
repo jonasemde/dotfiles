@@ -62,7 +62,7 @@ function bbo {
 }
 
 function vm() {
-   cd ~/homestead7
+   cd ~/homestead
    
    command="$1"
 
