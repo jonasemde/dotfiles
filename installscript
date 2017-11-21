@@ -19,7 +19,7 @@ git config --global core.excludesfile $HOME/.global-gitignore
 
 #symlink bash_profile
 rm $HOME/.bash_profile
-ln -s $HOME/.dotfiles/shell/.zshrc $HOME/.bash_profile
+ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
 
 #symlink zsh prefs
 rm $HOME/.zshrc
