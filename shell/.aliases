@@ -35,6 +35,7 @@ alias s="cd ~/Sites/"
 alias update="brew upgrade && sudo n latest && sudo npm update && sudo npm i -g npm -g && composer global update"
 
 # NPM, Composer & Laravel
+alias e_l='envoy run list'
 alias n_w='npm run watch'
 alias n_p='npm run production'
 alias n_d='npm run dev'
