@@ -1,16 +1,3 @@
-# Deployment
-alias d_twint_live="cd ~/Sites/twint.local && envoy run deploy_assets --env=live && envoy run deploy_live --env=live"
-alias d_twint_staging="cd ~/Sites/twint.local && envoy run deploy_assets --env=staging && envoy run deploy_staging --env=staging"
-alias d_twint_m2staging="cd ~/Sites/twint.local && envoy run deploy_assets_to_m2staging --env=m2staging && envoy run deploy_m2staging --env=m2staging"
-alias d_m2_live="cd ~/Sites/agency-websites && envoy run deploy --env=live && npm run production"
-alias d_m2_staging="cd ~/Sites/agency-websites && envoy run deploy --env=dev && npm run production"
-alias d_m2s_live="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=live && npm run production"
-alias d_m2s_staging="cd ~/Sites/mindtwo.systems.local && envoy run deploy --env=staging && npm run production"
-alias d_svg_live="cd ~/Sites/sous-vide-pro.local && envoy run deploy_assets_to_live --env=live && envoy run deploy_live --env=live"
-alias d_svg_staging="cd ~/Sites/sous-vide-pro.local && envoy run deploy_assets_to_m2staging && envoy run deploy_m2staging"
-alias d_sel_live="cd ~/Sites/sel-cockpit.local && envoy run deploy --env=live && envoy run sync_assets --env=live"
-alias d_sel_staging="cd ~/Sites/sel-cockpit.local && envoy run deploy --env=staging && envoy run sync_assets --env=staging"
-
 # Defaults
 alias np="source ~/.zshrc"
 alias dotfiles="subl ~/.dotfiles"
@@ -85,6 +72,9 @@ alias o="open ."
 
 # PhpStorm
 alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
+
+#vscode
+alias code='open -a "/Applications/Visual Studio Code.app" "`pwd`"'
 
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"

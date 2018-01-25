@@ -61,6 +61,14 @@ function bbo {
     open "https://bitbucket.org/${remote}"
 }
 
+function deploy() {
+  project="$1";
+  env="$2";
+  start_dir=$(pwd);
+  cd ~/Sites/_helpers/global-deployments && envoy run deploy --project=${project} --env=${env};
+  cd ${start_dir};
+}
+
 function vm() {
    cd ~/homestead
    
