@@ -55,6 +55,16 @@ alias acc='art_cc'
 alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
 alias vm="homestead up && homestead ssh"
 
+# magento
+alias mg='php magento'
+alias mg_ce='php magento cache:enable'
+alias mg_cd='php magento cache:disable config layout block_html full_page'
+alias mg_the='php magento dev:template-hints:enable && mg_cc'
+alias mg_thd='php magento dev:template-hints:disable && mg_cc'
+alias mg_cc='php magento cache:clean config layout block_html full_page'
+alias mg_cf='php magento cache:flush config layout block_html full_page'
+alias mg_ss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mg_cc'
+
 # docker
 alias d_start='docker-compose start'
 alias d_stop='docker-compose stop'
