@@ -23,6 +23,7 @@ alias update="brew upgrade && sudo n latest && sudo npm update && sudo npm i -g 
 
 # NPM, Composer & Laravel
 alias e_l='envoy run list'
+alias el='e_l'
 alias n_w='npm run watch'
 alias n_p='npm run production'
 alias n_d='npm run dev'
@@ -44,13 +45,13 @@ alias vm="homestead up && homestead ssh"
 
 # magento
 alias mg='php magento'
-alias mg_ce='php magento cache:enable'
-alias mg_cd='php magento cache:disable config layout block_html full_page'
-alias mg_the='php magento dev:template-hints:enable && mg_cc'
-alias mg_thd='php magento dev:template-hints:disable && mg_cc'
-alias mg_cc='php magento cache:clean config layout block_html full_page'
-alias mg_cf='php magento cache:flush config layout block_html full_page'
-alias mg_ss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mg_cc'
+alias m_ce='php magento cache:enable'
+alias m_cd='php magento cache:disable config layout block_html full_page'
+alias m_the='php magento dev:template-hints:enable && mg_cc'
+alias m_thd='php magento dev:template-hints:disable && mg_cc'
+alias m_cc='php magento cache:clean config layout block_html full_page'
+alias m_cf='php magento cache:flush config layout block_html full_page'
+alias m_ss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mg_cc'
 
 # docker
 alias d_start='[ -f vessel ] && ./vessel start || docker-compose start'
