@@ -66,12 +66,15 @@ alias mg_cf='php magento cache:flush config layout block_html full_page'
 alias mg_ss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mg_cc'
 
 # docker
-alias d_start='docker-compose start'
-alias d_stop='docker-compose stop'
+alias d_start='[ -f vessel ] && ./vessel start || docker-compose start'
+alias d_stop='[ -f vessel ] && ./vessel stop || docker-compose stop'
 alias d_build='docker-compose build'
-alias d_up='docker-compose up'
+alias d_up='[ -f vessel ] && ./vessel start || docker-compose up'
 alias d_rm='docker rm $(docker ps -aq)'
 alias d_rmi='docker rmi $(docker images -q)'
+
+# docker vessel specific
+alias v_init='[ ! -f vessel ] && (composer require shipping-docker/vessel && php artisan vendor:publish --provider="Vessel\VesselServiceProvider" && bash vessel init)'
 
 # git
 alias gpo="git push origin"
