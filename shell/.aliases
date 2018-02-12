@@ -34,10 +34,13 @@ alias c_d='c_da'
 alias c_cc='[ -f vessel ] && ./vessel composer clear-cache || composer clear-cache'
 alias c_c='c_cc'
 alias c_gu='[ -f vessel ] && ./vessel composer global update || composer global update'
-alias art="[ -f vessel ] && ./vessel artisan || php artisan"
+alias art='[ -f vessel ] && ./vessel artisan "$@" || php artisan'
 alias a="art"
 alias art_mf='[ -f vessel ] && ./vessel artisan migrate:fresh || php artisan migrate:fresh'
 alias amf='art_mf'
+alias art_mrs='[ -f vessel ] && ./vessel artisan migrate:refresh --seed || php artisan migrate:refresh --seed'
+alias amrs='art_mrs'
+alias amrs='art_mr'
 alias art_mfs='[ -f vessel ] && ./vessel artisan migrate:fresh --seed || php artisan migrate:fresh --seed'
 alias amfs='art_mfs'
 alias art_cc='[ -f vessel ] && ./vessel artisan cache:clear || php artisan cache:clear'
@@ -45,17 +48,17 @@ alias acc='art_cc'
 alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
 alias vm="homestead up && homestead ssh"
 
-# magento
-alias mg='php magento'
-alias m_ce='php magento cache:enable'
-alias m_cd='php magento cache:disable config layout block_html full_page'
-alias m_the='php magento dev:template-hints:enable && mg_cc'
-alias m_thd='php magento dev:template-hints:disable && mg_cc'
-alias m_cc='php magento cache:clean config layout block_html full_page'
-alias m_cf='php magento cache:flush config layout block_html full_page'
+# Magento
+alias mg='php -d memory_limit=-1 magento'
+alias m_ce='php -d memory_limit=-1 magento cache:enable'
+alias m_cd='php -d memory_limit=-1 magento cache:disable config layout block_html full_page'
+alias m_the='php -d memory_limit=-1 magento dev:template-hints:enable && mg_cc'
+alias m_thd='php -d memory_limit=-1 magento dev:template-hints:disable && mg_cc'
+alias m_cc='php -d memory_limit=-1 magento cache:clean config layout block_html full_page'
+alias m_cf='php -d memory_limit=-1 magento cache:flush config layout block_html full_page'
 alias m_ss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mg_cc'
 
-# docker
+# Docker
 alias d_start='[ -f vessel ] && ./vessel start || docker-compose start'
 alias d_stop='[ -f vessel ] && ./vessel stop || docker-compose stop'
 alias d_build='docker-compose build'
@@ -63,7 +66,7 @@ alias d_up='[ -f vessel ] && ./vessel start || docker-compose up'
 alias d_rm='docker rm $(docker ps -aq)'
 alias d_rmi='docker rmi $(docker images -q)'
 
-# docker vessel specific
+# Docker vessel specific
 alias v_init='[ ! -f vessel ] && (composer require shipping-docker/vessel && php artisan vendor:publish --provider="Vessel\VesselServiceProvider" && bash vessel init)'
 
 # git
@@ -76,7 +79,7 @@ alias o="open ."
 # PhpStorm
 alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
 
-#vscode
+# VScode
 alias code='open -a "/Applications/Visual Studio Code.app" "`pwd`"'
 
 # Show/hide hidden files in Finder
