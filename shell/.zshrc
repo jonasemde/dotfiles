@@ -1,4 +1,8 @@
 source ~/.profile
+
+# Include z
+source $(brew --prefix)/etc/profile.d/z.sh
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
