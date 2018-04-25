@@ -1,5 +1,5 @@
 # Dev bin path
-export PATH=~/.composer/vendor/bin:~/.npm-packages:~/.bin:~/.dotfiles/bin:$PATH
+export PATH=~/.dotfiles/bin:$PATH:~/.composer/vendor/bin:~/.npm-packages:~/.bin
 
 # Make vim the default editor
 export EDITOR="subl -w"
