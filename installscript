@@ -144,27 +144,6 @@ echo 'install laravel valet'
 echo '---------------------'
 composer global require spatie/phpunit-watcher
 
-echo 'install php'
-echo '------------'
-brew tap homebrew/dupes
-brew tap homebrew/versions
-brew tap homebrew/homebrew-php
-brew install php71
-brew install php71-xdebug
-sudo brew services start homebrew/php/php71
-brew install homebrew/php/php71-mcrypt
-brew install homebrew/php/php71-imagick
-
-echo 'install redis'
-echo '------------'
-brew install redis
-brew install --HEAD homebrew/php/php71-redis
-
-echo 'install mysql'
-echo '---------------'
-brew install mysql
-brew services start mysql
-
 echo 'install ghostscript'
 echo '-------------------'
 brew install ghostscript
