@@ -7,6 +7,7 @@
 [core]
 	editor = subl
 	excludesfile = ~/.global-gitignore
+    ignorecase = false
 [diff]
 	tool = diffmerge
 [difftool "diffmerge"]
