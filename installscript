@@ -21,6 +21,10 @@ git config --global core.excludesfile $HOME/.global-gitignore
 rm $HOME/.bash_profile
 ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
 
+#symlink yarnrc
+rm $HOME/.yarnrc
+ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.yarnrc
+
 #symlink zsh prefs
 rm $HOME/.zshrc
 ln -s $HOME/.dotfiles/shell/.zshrc $HOME/.zshrc
