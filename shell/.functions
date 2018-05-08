@@ -65,7 +65,7 @@ function deploy() {
   project="$1";
   env="$2";
   start_dir=$(pwd);
-  cd ~/Sites/_helpers && envoy run deploy --file=EnvoyGlobalDeployments.blade.php --project=${project} --env=${env};
+  cd ~/Sites/_helpers && envoy run deploy --conf=EnvoyGlobalDeployments.blade.php --project=${project} --env=${env};
   cd ${start_dir};
 }
 
