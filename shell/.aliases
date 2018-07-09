@@ -19,7 +19,7 @@ alias g="grep '|'' ./* -R"
 alias wget="curl -O"
 alias h="cd ~/"
 alias s="cd ~/Sites/"
-alias update="brew upgrade && sudo npm update && sudo npm i -g npm -g && composer self-update && composer global update"
+alias update="brew upgrade && sudo npm update -g && sudo npm i -g npm -g && composer self-update && composer global update"
 
 # NPM, Composer & Laravel
 alias el='envoy run list'
@@ -59,7 +59,7 @@ alias mss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:
 alias dstart='[ -f vessel ] && ./vessel start || docker-compose start'
 alias dstop='[ -f vessel ] && ./vessel stop || docker-compose stop'
 alias dbuild='docker-compose build'
-alias dup='[ -f vessel ] && ./vessel start || docker-compose up'
+alias dup='[ -f vessel ] && (./vessel stop && ./vessel start) || (docker-compose stop && docker-compose up)'
 alias drm='docker rm $(docker ps -aq)'
 alias drmi='docker rmi $(docker images -q)'
 
