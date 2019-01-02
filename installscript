@@ -73,22 +73,6 @@ echo 'install httpie'
 echo '------------'
 brew install httpie
 
-echo 'install ncdu'
-echo '------------'
-brew install ncdu
-
-echo 'install hub'
-echo '-----------'
-brew install hub
-
-echo 'install ack'
-echo '------------'
-brew install ack
-
-echo 'install doctl'
-echo '-------------'
-brew install doctl
-
 echo 'install brew-cask'
 echo '------------------'
 brew tap caskroom/cask
@@ -140,7 +124,7 @@ echo '---------------------'
 composer global require laravel/valet
 valet install
 
-echo 'install laravel valet'
+echo 'install phpunit-watcher'
 echo '---------------------'
 composer global require spatie/phpunit-watcher
 
@@ -167,7 +151,6 @@ brew cask install slack
 brew cask install invisionsync
 brew cask install skype
 brew cask install sketch
-brew cask install chrome-devtools
 brew cask install google-chrome
 brew cask install firefox
 brew cask install opera
@@ -180,7 +163,7 @@ brew cask install tower
 brew cask install google-adwords-editor
 brew cask install google-hangouts
 brew cask install google-web-designer
-brew cask install google-backup-and-sync
+brew cask install google-drive-file-stream
 brew cask install sublime-text-dev
 brew cask install phpstorm
 brew cask install coda
@@ -199,11 +182,32 @@ brew cask install screaming-frog-seo-spider
 brew cask install jbidwatcher
 brew cask install jdownloader
 brew cask install evernote
-brew cask install docker-edge
+brew cask install docker
 brew cask install adobe-creative-cloud
 brew cask install docker-toolbox
 brew cask install calibre
+brew cask install sdformatter
+brew cask install zeplin
 brew cask install colorsnapper
+brew cask install wondershare-video-converter-ultimate
+brew cask install visual-studio-code
+brew cask install the-unarchiver
+brew cask install suitcase-fusion
+brew cask install flowsync
+brew cask install microsoft-office
+brew cask install moneymoney
+brew cask install libreelec-usb-sd-creator
+brew cask install lingo
+brew cask install kodi
+brew cask install meta
+brew cask install imageoptim
+brew cask install gitify
+brew cask install craftmanager
+brew cask install dynamite
+brew cask install diffmerge
+brew cask install datagrip
+brew cask install cleanmymac
+brew cask install 1password
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
