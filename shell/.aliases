@@ -22,6 +22,7 @@ alias s="cd ~/Sites/"
 alias update="brew upgrade && sudo npm update -g && sudo npm i -g npm -g && composer self-update && composer global update"
 
 # NPM, Composer & Laravel
+alias lu='lucid'
 alias el='envoy run list'
 alias nw='npm run watch'
 alias np='npm run production'
@@ -46,14 +47,14 @@ alias y='function __yarn() { [ -f vessel ] && ./vessel yarn "$@" || yarn "$@" };
 alias v='function __vessel() { ./vessel yarn "$@" }; __vessel'
 
 # Magento
-alias m='php -d memory_limit=-1 magento'
-alias mce='php -d memory_limit=-1 magento cache:enable'
-alias mcd='php -d memory_limit=-1 magento cache:disable config layout block_html full_page'
-alias mthe='php -d memory_limit=-1 magento dev:template-hints:enable && mcc'
-alias mthd='php -d memory_limit=-1 magento dev:template-hints:disable && mcc'
-alias mcc='php -d memory_limit=-1 magento cache:clean config layout block_html full_page'
-alias mcf='php -d memory_limit=-1 magento cache:flush config layout block_html full_page'
-alias mss='rm -Rf ./pub/static/frontend && php -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mcc'
+alias m='php71 -d memory_limit=-1 magento'
+alias mce='php71 -d memory_limit=-1 magento cache:enable'
+alias mcd='php71 -d memory_limit=-1 magento cache:disable config layout block_html full_page'
+alias mthe='php71 -d memory_limit=-1 magento dev:template-hints:enable && mcc'
+alias mthd='php71 -d memory_limit=-1 magento dev:template-hints:disable && mcc'
+alias mcc='php71 -d memory_limit=-1 magento cache:clean config layout block_html full_page'
+alias mcf='php71 -d memory_limit=-1 magento cache:flush config layout block_html full_page'
+alias mss='rm -Rf ./pub/static/frontend && php71 -d memory_limit=-1 magento setup:static-content:deploy de_DE -f && mcc'
 
 # Docker
 alias dstart='[ -f vessel ] && ./vessel start || docker-compose start'
