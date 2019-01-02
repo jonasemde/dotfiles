@@ -36,22 +36,27 @@ ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.npmrc
 rm -R $HOME/.vim
 ln -s $HOME/.dotfiles/shell/.vim $HOME/.vim
 
-#fix missing font characters (see https://github.com/robbyrussell/oh-my-zsh/issues/1906)
+# Fix missing font characters (see https://github.com/robbyrussell/oh-my-zsh/issues/1906)
 cd ~/.oh-my-zsh/themes/
 git checkout d6a36b1 agnoster.zsh-theme
 
-echo 'install composer'
+echo 'Install composer'
 echo '----------------'
 cd ~/.dotfiles
-curl -sS https://getcomposer.org/installer | php
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
 echo 'move composer to /usr/local/bin/composer'
 mv -f composer.phar /usr/local/bin/composer
 
-#activate z
-cd ~/.dotfiles/shell
-chmod +x z.sh
+php composer-setup.php --quiet
+rm -f composer-setup.php
 
-echo 'install homebrew'
+echo 'move composer to /usr/local/bin/composer'
+mv -f composer.phar /usr/local/bin/composer
+
+echo 'Install homebrew'
 echo '----------------'
 echo install homebrew
 sudo rm -rf /usr/local/Cellar /usr/local/.git && brew cleanup
@@ -83,9 +88,25 @@ echo 'install z'
 echo '-------------'
 brew install z
 
+#activate z
+cd ~/.dotfiles/shell
+chmod +x z.sh
+
+echo 'Install ack'
+echo '-----------'
+brew install ack
+
+echo 'Install node'
+echo '-----------'
+brew install node@8
+
 echo 'install some nice quicklook plugins'
 echo '-----------------------------------'
 brew cask install --force qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package
+
+echo 'Install zsh-autosuggestions'
+echo '---------------------------'
+brew install zsh-autosuggestions
 
 echo 'add composer config'
 echo '---------------------'
@@ -234,20 +255,17 @@ brew cask install 1password
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
-echo 'all done'
+echo 'All done!'
 echo 'Things to do to make the agnoster terminal theme work:'
+echo '1. Install menlo patched font included in ~/.dotfiles/misc https://gist.github.com/qrush/1595572/raw/Menlo-Powerline.otf'
+echo '2. Install patched solarized theme included in ~/.dotfiles/misc'
 
-#patch font contains right characters for promt
-echo '1. install menlo patched font included in ~/.dotfiles/misc https://gist.github.com/qrush/1595572/raw/Menlo-Powerline.otf' 
-
-#install solarized http://ethanschoonover.com/solarized
-echo '2. install patched solarized theme included in ~/.dotfiles/misc'
-
-echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
 echo 'Some optional tidbits'
 
-echo '1. set some sensible os x defaults by running: $HOME/.dotfiles/osx/set-defaults.sh'
-echo '2. make a .dotfiles-custom/shell/.aliases for your personal commands'
+echo '1. Make sure dropbox is running first. If you have not backed up via Mackup yet, then run `mackup backup` to symlink preferences for a wide collection of apps to your dropbox. If you already had a backup via mackup run `mackup restore` You'\''ll find more info on Mackup here: https://github.com/lra/mackup.'
+echo '2. Set some sensible os x defaults by running: $HOME/.dotfiles/macos/set-defaults.sh'
+echo '3. Make a .dotfiles-custom/shell/.aliases for your personal commands'
 
+echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
