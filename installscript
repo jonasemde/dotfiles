@@ -7,15 +7,20 @@ touch $HOME/.hushlogin
 echo 'install oh-my-zhs'
 echo '-----------------'
 rm -rf $HOME/.oh-my-zsh
-curl -L http://install.ohmyz.sh | sh
+curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+chsh -s $(which zsh)
 
-#global gitigore
-ln -s $HOME/.dotfiles/shell/.global-gitignore $HOME/.global-gitignore
-git config --global core.excludesfile $HOME/.global-gitignore
+# Fix missing font characters (see https://github.com/robbyrussell/oh-my-zsh/issues/1906)
+cd $HOME/.oh-my-zsh/themes/
+git checkout d6a36b1 agnoster.zsh-theme
 
 #symlink bash_profile
 rm $HOME/.bash_profile
 ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
+
+#symlink profile
+rm $HOME/.profile
+ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.profile
 
 #symlink yarnrc
 rm $HOME/.yarnrc
@@ -35,10 +40,6 @@ ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.npmrc
 
 rm -R $HOME/.vim
 ln -s $HOME/.dotfiles/shell/.vim $HOME/.vim
-
-# Fix missing font characters (see https://github.com/robbyrussell/oh-my-zsh/issues/1906)
-cd ~/.oh-my-zsh/themes/
-git checkout d6a36b1 agnoster.zsh-theme
 
 echo 'Install composer'
 echo '----------------'
@@ -65,6 +66,13 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 echo 'install git'
 echo '------------'
 brew install git
+
+#global git config
+ln -s $HOME/.dotfiles/shell/.gitconfig $HOME/.gitconfig
+
+#global gitigore
+ln -s $HOME/.dotfiles/shell/.global-gitignore $HOME/.global-gitignore
+git config --global core.excludesfile $HOME/.global-gitignore
 
 echo 'install wget'
 echo '------------'

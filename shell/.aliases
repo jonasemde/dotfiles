@@ -20,6 +20,16 @@ alias wget="curl -O"
 alias h="cd ~/"
 alias s="cd ~/Sites/"
 alias update="brew upgrade && sudo npm update -g && sudo npm i -g npm -g && composer self-update && composer global update"
+alias p="phpunit"
+alias pf="phpunit --filter "
+
+# Tool replacements
+alias cat=bat
+alias ping='prettyping --nolegend'
+alias man=tldr
+
+# JavaScript
+alias jest="./node_modules/.bin/jest"
 
 # NPM, Composer & Laravel
 alias lu='lucid'
@@ -29,7 +39,7 @@ alias np='npm run production'
 alias nd='npm run dev'
 alias cu='[ -f vessel ] && ./vessel composer update || composer update'
 alias ci='[ -f vessel ] && ./vessel composer install || composer install'
-alias cda='[ -f vessel ] && ./vessel composer dump-autoload || composer dump-autoload'
+alias cda='[ -f vessel ] && ./vessel composer dump-autoload -o || composer dump-autoload -o'
 alias ccc='[ -f vessel ] && ./vessel composer clear-cache || composer clear-cache'
 alias cgu='[ -f vessel ] && ./vessel composer global update || composer global update'
 alias amf='[ -f vessel ] && ./vessel artisan migrate:fresh || php artisan migrate:fresh'
@@ -68,7 +78,10 @@ alias drmi='docker rmi $(docker images -q)'
 alias vinit='[ ! -f vessel ] && (composer require shipping-docker/vessel && php artisan vendor:publish --provider="Vessel\VesselServiceProvider" && bash vessel init)'
 
 # git
+alias nah='git reset --hard;git clean -df'
+alias gc="git checkout"
 alias gpo="git push origin"
+alias gm="git merge"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Fast open
