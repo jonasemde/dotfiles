@@ -1,8 +1,8 @@
 # Dev bin path
-export PATH=~/.dotfiles/bin:$PATH:~/.composer/vendor/bin:~/.npm-packages:~/.bin:./vendor/bin
+export PATH=./vendor/bin:~/.dotfiles/bin:~/.composer/vendor/bin:~/.npm-packages:~/.bin:/usr/local/opt/ncurses/bin:$PATH
 
 # Make vim the default editor
-export EDITOR="subl"
+export EDITOR="subl -w"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -24,3 +24,10 @@ export MANPAGER="less -X"
 
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
+
+# Cask folder
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# For compilers to find ncurses you may need to set
+export LDFLAGS="-L/usr/local/opt/ncurses/lib"
+export CPPFLAGS="-I/usr/local/opt/ncurses/include"
