@@ -1,5 +1,3 @@
-source ~/.profile
-
 # Include z
 source $(brew --prefix)/etc/profile.d/z.sh
 
