@@ -1,0 +1,12 @@
+[submodule "shell/.vim/bundle/command-t"]
+	path = shell/.vim/bundle/command-t
+[submodule "shell/.vim/bundle/nerdtree"]
+	path = shell/.vim/bundle/nerdtree
+[submodule "shell/.vim/bundle/sparkup"]
+	path = shell/.vim/bundle/sparkup
+[submodule "shell/.vim/bundle/vim-fugitive"]
+	path = shell/.vim/bundle/vim-fugitive
+[submodule "shell/.vim/bundle/vim-vinegar"]
+	path = shell/.vim/bundle/vim-vinegar
+[submodule "shell/.vim/bundle/Vundle.vim"]
+	path = shell/.vim/bundle/Vundle.vim
