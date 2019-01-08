@@ -1,9 +1,5 @@
-# Include z
-source $(brew --prefix)/etc/profile.d/z.sh
-
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-
 ZSH_CUSTOM=$HOME/.dotfiles/misc/oh-my-zsh-custom
 
 # Set name of the theme to load.
@@ -37,8 +33,7 @@ export UPDATE_ZSH_DAYS=1
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git laravel5 composer osx vagrant docker docker-compose dotenv httpie npm vscode wp-cli yarn ansible n98-magerun terminal)
-
-source $ZSH/oh-my-zsh.sh
+[[ -e $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
 #set numeric keys
 # 0 . Enter
@@ -68,22 +63,31 @@ bindkey -s "^[Oo" "/"
 for file in ~/.dotfiles/shell/.{exports,aliases,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
 done
+for file in ~/.dotfiles-custom/shell/.{exports,aliases,functions,zshrc}; do
+    [ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
 unset file
+
+# Load rvm
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
 # Unset manpath so we can inherit from /etc/manpath via the `manpath`
 # command
 unset MANPATH # delete if you already modified MANPATH elsewhere in your config
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-export PATH=$HOME/.dotfiles/bin:$PATH
-[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
-
-#import ssh keys in keychain
+# import ssh keys in keychain
 ssh-add -A 2>/dev/null;
 
-#setup xdebug
-export XDEBUG_CONFIG="remote_enable=1 remote_mode=req remote_port=9001 remote_host=127.0.0.1 remote_connect_back=0"
+# setup xdebug
+export XDEBUG_CONFIG="idekey=VSCODE remote_enable=1 remote_mode=req remote_port=9001 remote_host=127.0.0.1 remote_connect_back=0"
 
 # zsh-completions
 # To activate these completions, add the following to your .zshrc
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+# Enable autosuggestions
+[[ -e /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Include z
+[[ -e $(brew --prefix)/etc/profile.d/z.sh ]] && source $(brew --prefix)/etc/profile.d/z.sh
