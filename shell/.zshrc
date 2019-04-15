@@ -93,3 +93,9 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Include z
 [[ -e $(brew --prefix)/etc/profile.d/z.sh ]] && source $(brew --prefix)/etc/profile.d/z.sh
+
+###-tns-completion-start-###
+if [ -f /Users/jonasemde/.tnsrc ]; then 
+    source /Users/jonasemde/.tnsrc 
+fi
+###-tns-completion-end-###
