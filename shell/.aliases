@@ -22,6 +22,8 @@ alias s="cd ~/Sites/"
 alias update="brew upgrade && sudo npm update -g && sudo npm i -g npm -g && composer self-update && composer global update"
 alias p="phpunit"
 alias pf="phpunit --filter "
+alias pw="phpunit-watcher watch"
+alias pwf="phpunit-watcher watch --filter "
 
 # Tool replacements
 alias cat=bat
