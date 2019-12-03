@@ -34,7 +34,7 @@ export UPDATE_ZSH_DAYS=1
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git laravel5 composer osx vagrant docker docker-compose dotenv httpie npm vscode wp-cli yarn ansible n98-magerun terminal)
+plugins=(git laravel5 composer osx vagrant docker docker-compose httpie npm vscode wp-cli yarn ansible n98-magerun terminal)
 [[ -e $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
 
 #set numeric keys
