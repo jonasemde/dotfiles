@@ -21,3 +21,6 @@ node_modules
 npm-debug.log
 yarn-error.log
 .phpunit-watcher-cache.php
+
+# Envoy error files
+Envoy[A-Za-z0-9]*.php
