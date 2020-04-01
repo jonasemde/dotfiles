@@ -1,10 +1,13 @@
 # Dev bin path
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/opt/ncurses/bin:$PATH
+export PATH=/usr/local/opt/ruby/bin:$PATH
 export PATH=~/.composer/vendor/bin:$PATH
 export PATH=~/.dotfiles/bin:$PATH
 export PATH=./node_modules/.bin/:$PATH
 export PATH=./vendor/bin:$PATH
+
+
 
 # Make vim the default editor
 export EDITOR="subl -w"
