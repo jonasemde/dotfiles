@@ -108,10 +108,6 @@ echo 'Install node'
 echo '-----------'
 brew install node@8
 
-echo 'install some nice quicklook plugins'
-echo '-----------------------------------'
-brew cask install --force qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package
-
 echo 'Install zsh-autosuggestions'
 echo '---------------------------'
 brew install zsh-autosuggestions
@@ -198,68 +194,8 @@ npm install -g svgo
 
 echo 'install system apps'
 echo '------------'
-brew cask install dropbox
-brew cask install slack
-brew cask install invisionsync
-brew cask install skype
-brew cask install sketch
-brew cask install google-chrome
-brew cask install firefox
-brew cask install opera
-brew cask install mamp
-brew cask install google-nik-collection
-brew cask install alfred
-brew cask install bartender
-brew cask install iterm2
-brew cask install tower
-brew cask install google-adwords-editor
-brew cask install google-hangouts
-brew cask install google-web-designer
-brew cask install google-drive-file-stream
-brew cask install sublime-text-dev
-brew cask install phpstorm
-brew cask install coda
-brew cask install transmit
-brew cask install teamviewer
-brew cask install moom
-brew cask install querious
-brew cask install sequel-pro
-brew cask install spotify
-brew cask install postman
-brew cask install poedit
-brew cask install xmind
-brew cask install vlc
-brew cask install whatsapp
-brew cask install screaming-frog-seo-spider
-brew cask install jbidwatcher
-brew cask install jdownloader
-brew cask install evernote
-brew cask install docker
-brew cask install adobe-creative-cloud
-brew cask install docker-toolbox
-brew cask install calibre
-brew cask install sdformatter
-brew cask install zeplin
-brew cask install colorsnapper
-brew cask install wondershare-video-converter-ultimate
-brew cask install visual-studio-code
-brew cask install the-unarchiver
-brew cask install suitcase-fusion
-brew cask install flowsync
-brew cask install microsoft-office
-brew cask install moneymoney
-brew cask install libreelec-usb-sd-creator
-brew cask install lingo
-brew cask install kodi
-brew cask install meta
-brew cask install imageoptim
-brew cask install gitify
-brew cask install craftmanager
-brew cask install dynamite
-brew cask install diffmerge
-brew cask install datagrip
-brew cask install cleanmymac
-brew cask install 1password
+brew cask install --force 1password craftmanagergitify iterm2 moom spotify vlc a-better-finder-rename dashgoogle-adwords-editor java8 phpstorm sublime-text-dev whatsapp adobe-creative-cloud diffmergegoogle-chrome poedit tableplus wondershare-video-converter-ultimate alfred dockergoogle-drive-file-stream postman teamviewer xmind anydesk dropboxgoogle-hangouts kodi querious the-unarchiver zeplin balenaetcher dynamitegoogle-nik-collection lingo screaming-frog-seo-spider tor-browser bartender evernotegoogle-web-designer macdown sequel-pro tower calibre firefoxgrammarly mamp sketch transmit cleanmymac flowsynciconjar meta skype vagrant coda fontbaseimageoptim microsoft-office skype-for-business virtualbox colorsnapper githubinvisionsync moneymoney slack visual-studio-code
+
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
