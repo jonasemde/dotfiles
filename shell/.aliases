@@ -19,7 +19,7 @@ alias g="grep '|'' ./* -R"
 alias wget="curl -O"
 alias h="cd ~/"
 alias s="cd ~/Sites/"
-alias update="brew upgrade && sudo npm update -g && sudo npm i -g npm -g && composer self-update && composer global update"
+alias update="brew upgrade && brew cask upgrade && sudo npm update -g && npm install -g npm && composer global update"
 alias p="phpunit"
 alias pf="phpunit --filter "
 alias pw="phpunit-watcher watch"
@@ -29,9 +29,6 @@ alias pwf="phpunit-watcher watch --filter "
 alias cat=bat
 alias p1='ping -c1'
 alias man=tldr
-
-# JavaScript
-alias jest="./node_modules/.bin/jest"
 
 # NPM, Composer & Laravel
 alias lu='lucid'
