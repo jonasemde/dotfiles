@@ -1,5 +1,6 @@
 # Dev bin path
 export PATH=/usr/local/bin:$PATH
+export PATH="/usr/local/opt/node@12/bin:$PATH"
 export PATH=/usr/local/opt/ncurses/bin:$PATH
 export PATH=/usr/local/opt/ruby/bin:$PATH
 export PATH=~/.composer/vendor/bin:$PATH
