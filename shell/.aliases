@@ -30,6 +30,18 @@ alias cat=bat
 alias p1='ping -c1'
 alias man=tldr
 
+# PHP
+alias uphp71='ln -sfn ~/.dotfiles/bin/php71 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias sphp71='uphp71'
+alias uphp72='ln -sfn ~/.dotfiles/bin/php72 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias sphp72='uphp72'
+alias uphp73='ln -sfn ~/.dotfiles/bin/php73 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias sphp73='uphp73'
+alias uphp74='ln -sfn ~/.dotfiles/bin/php74 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias sphp74='uphp74'
+alias uphp75='ln -sfn ~/.dotfiles/bin/php75 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias sphp75='uphp75'
+
 # NPM, Composer & Laravel
 alias lu='lucid'
 alias el='envoy run list'
