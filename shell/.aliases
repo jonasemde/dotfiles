@@ -5,11 +5,6 @@ alias .="dotfiles"
 alias .dotfiles="dotfiles"
 alias hosts="subl /etc/hosts"
 alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
-alias ..='cd ..'
-alias ...='cd ../../'
-alias ....='cd ../../../'
-alias .....='cd ../../../../'
-alias ......='cd ../../../../../'
 alias fresh='clear; echo -e "\033c\e[3J" && source ~/.zshrc'
 alias c='fresh'
 alias f='fresh'
@@ -26,9 +21,7 @@ alias pw="phpunit-watcher watch"
 alias pwf="phpunit-watcher watch --filter "
 
 # Tool replacements
-alias cat=bat
 alias p1='ping -c1'
-alias man=tldr
 
 # PHP
 alias uphp71='ln -sfn ~/.dotfiles/bin/php71 ~/.dotfiles/bin/php && clear; echo -e "\033c\e[3J" && source ~/.zshrc'
