@@ -3,41 +3,38 @@
 # hide "last login" line when starting a new terminal session
 touch $HOME/.hushlogin
 
-#install zsh
+# install zsh
 echo 'install oh-my-zhs'
 echo '-----------------'
 rm -rf $HOME/.oh-my-zsh
 curl -L https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 chsh -s $(which zsh)
 
-# Fix missing font characters (see https://github.com/robbyrussell/oh-my-zsh/issues/1906)
-cd $HOME/.oh-my-zsh/themes/
-git checkout d6a36b1 agnoster.zsh-theme
-
-#symlink bash_profile
+# symlink bash_profile
 rm $HOME/.bash_profile
 ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
 
-#symlink profile
+# symlink profile
 rm $HOME/.profile
 ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.profile
 
-#symlink yarnrc
+# symlink yarnrc
 rm $HOME/.yarnrc
 ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.yarnrc
 
-#symlink zsh prefs
+# symlink zsh prefs
 rm $HOME/.zshrc
 ln -s $HOME/.dotfiles/shell/.zshrc $HOME/.zshrc
 
-#symlink vim prefs
+# symlink vim prefs
 rm $HOME/.vimrc
 ln -s $HOME/.dotfiles/shell/.vimrc $HOME/.vimrc
 
-#symlink yarn prefs
+# symlink yarn prefs
 rm $HOME/.npmrc
 ln -s $HOME/.dotfiles/shell/.yarnrc $HOME/.npmrc
 
+# vim config
 rm -R $HOME/.vim
 ln -s $HOME/.dotfiles/shell/.vim $HOME/.vim
 
@@ -45,8 +42,8 @@ echo 'Install composer'
 echo '----------------'
 cd ~/.dotfiles
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php --quiet
+php -r "if (hash_file('sha384', 'composer-setup.php') === '8a6138e2a05a8c28539c9f0fb361159823655d7ad2deecb371b04a83966c61223adc522b0189079e3e9e277cd72b8897') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
 php -r "unlink('composer-setup.php');"
 echo 'move composer to /usr/local/bin/composer'
 mv -f composer.phar /usr/local/bin/composer
@@ -61,10 +58,10 @@ echo 'install git'
 echo '------------'
 brew install git
 
-#global git config
+# global git config
 ln -s $HOME/.dotfiles/shell/.gitconfig $HOME/.gitconfig
 
-#global gitigore
+# global gitigore
 ln -s $HOME/.dotfiles/shell/.global-gitignore $HOME/.global-gitignore
 git config --global core.excludesfile $HOME/.global-gitignore
 
@@ -98,81 +95,19 @@ echo 'Install ack'
 echo '-----------'
 brew install ack
 
+echo 'Install php'
+echo '-----------'
+brew install php
+brew install php@7.2
+brew install php@7.3
+
 echo 'Install node'
 echo '-----------'
-brew install node@8
+brew install node@12
 
 echo 'Install zsh-autosuggestions'
 echo '---------------------------'
 brew install zsh-autosuggestions
-
-echo 'add composer config'
-echo '---------------------'
-php composer.phar config repositories.license "proprietary"
-php composer.phar config repositories.prefer-stable "true"
-php composer.phar config repositories.minimum-stability "dev"
-php composer.phar config repositories.description "Global composer packages"
-php composer.phar config repositories.name "mindtwo/jonas-global-packages"
-php composer.phar config repositories.typo3-mindtwo-installer '{"type": "path", "url": "~/Sites/_packagist/typo3-mindtwo-installer"}'
-php composer.phar config repositories.typo3-mindtwo-installer '{"type": "path", "url": "~/Sites/_packagist/typo3-mindtwo-installer"}'
-php composer.phar config repositories.wordpress-mindtwo-installer '{"type": "path", "url": "~/Sites/_packagist/wordpress-mindtwo-installer"}'
-php composer.phar config repositories.authors '{"name": "mindtwo GmbH","email": "info@mindtwo.de","homepage": "https://www.mindtwo.de/","role": "Developer"}'
-
-echo 'install laravel envoy'
-echo '---------------------'
-composer global require "laravel/envoy=dev-master";
-
-echo 'install php-cs-fixer'
-echo '--------------------'
-composer global require "friendsofphp/php-cs-fixer";
-
-echo 'install laravel installer'
-echo '--------------------'
-composer global require "laravel/installer";
-
-echo 'install laravel installer'
-echo '--------------------'
-composer global require "laravel/installer";
-
-echo 'install lumen installer'
-echo '--------------------'
-composer global require "laravel/lumen-installer";
-
-echo 'install spark installer'
-echo '--------------------'
-composer global require "laravel/spark-installer";
-
-echo 'install wp-cli'
-echo '--------------------'
-composer global require "wp-cli/wp-cli=dev-master";
-
-echo 'install php_codesniffer'
-echo '--------------------'
-composer global require "squizlabs/php_codesniffer=dev-master";
-
-echo 'install phpunit'
-echo '---------------------'
-composer global require "phpunit/phpunit=^7.0";
-
-echo 'install phpunit-watcher'
-echo '---------------------'
-composer global require "spatie/phpunit-watcher";
-
-echo 'install wp-cli'
-echo '--------------------'
-composer global require "wp-cli/wp-cli-bundle=^2.0";
-
-echo 'install typo3-mindtwo-installer'
-echo '--------------------'
-composer global require "mindtwo/typo3-mindtwo-installer=@dev";
-
-echo 'install wordpress-mindtwo-installer'
-echo '--------------------'
-composer global require "mindtwo/wordpress-mindtwo-installer=@dev";
-
-echo 'install phpbench/phpbench'
-echo '--------------------'
-composer global require "phpbench/phpbench=@dev";
 
 echo 'install yarn'
 echo '------------'
@@ -188,8 +123,7 @@ npm install -g svgo
 
 echo 'install system apps'
 echo '------------'
-brew cask install --force 1password craftmanagergitify iterm2 moom spotify vlc a-better-finder-rename dashgoogle-adwords-editor java8 phpstorm sublime-text-dev whatsapp adobe-creative-cloud diffmergegoogle-chrome poedit tableplus wondershare-video-converter-ultimate alfred dockergoogle-drive-file-stream postman teamviewer xmind anydesk dropboxgoogle-hangouts kodi querious the-unarchiver zeplin balenaetcher dynamitegoogle-nik-collection lingo screaming-frog-seo-spider tor-browser bartender evernotegoogle-web-designer macdown sequel-pro tower calibre firefoxgrammarly mamp sketch transmit cleanmymac flowsynciconjar meta skype vagrant coda fontbaseimageoptim microsoft-office skype-for-business virtualbox colorsnapper githubinvisionsync moneymoney slack visual-studio-code
-
+brew cask install --force 1password gitify screaming-frog-seo-spider a-better-finder-rename google-drive-file-stream sketch alfred google-hangouts spotify anydesk google-web-designer sublime-text balenaetcher grammarly tableplus bartender iterm2 teamviewer calibre lingo the-unarchiver craftmanager macdown tower diffmerge mamp vlc docker moom whatsapp dropbox phpstorm xmind evernote poedit zeplin firefox postman
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'
