@@ -41,27 +41,26 @@ alias el='envoy run list'
 alias nw='npm run watch'
 alias np='npm run production'
 alias nd='npm run dev'
-alias cu='[ -f vessel ] && ./vessel composer update || composer update'
-alias ci='[ -f vessel ] && ./vessel composer install || composer install'
-alias cda='[ -f vessel ] && ./vessel composer dump-autoload -o || composer dump-autoload -o'
-alias ccc='[ -f vessel ] && ./vessel composer clear-cache || composer clear-cache'
-alias cgu='[ -f vessel ] && ./vessel composer global update || composer global update'
-alias amf='[ -f vessel ] && ./vessel artisan migrate:fresh || php artisan migrate:fresh'
-alias amfs='[ -f vessel ] && ./vessel artisan migrate:fresh --seed || php artisan migrate:fresh --seed'
-alias amr='[ -f vessel ] && ./vessel artisan migrate:refresh || php artisan migrate:refresh'
-alias amrs='[ -f vessel ] && ./vessel artisan migrate:refresh --seed || php artisan migrate:refresh --seed'
+alias cu='composer update'
+alias ci='composer install'
+alias cda='composer dump-autoload -o'
+alias ccc='composer clear-cache'
+alias cgu='composer global update'
+alias amf='php artisan migrate:fresh'
+alias amfs='php artisan migrate:fresh --seed'
+alias amr='php artisan migrate:refresh'
+alias amrs='php artisan migrate:refresh --seed'
 alias ac='acc && avc && aconfig-clear'
-alias acc='[ -f vessel ] && ./vessel artisan cache:clear || php artisan cache:clear'
-alias avc='[ -f vessel ] && ./vessel artisan view:clear || php artisan view:clear'
-alias aconfig-clear='[ -f vessel ] && ./vessel artisan config:clear || php artisan config:clear'
-alias arl='[ -f vessel ] && ./vessel artisan route:list || php artisan route:list'
+alias acc='php artisan cache:clear'
+alias avc='php artisan view:clear'
+alias aconfig-clear='php artisan config:clear'
+alias arl='php artisan route:list'
 alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
 alias vm="homestead up && homestead ssh"
-alias a='function __artisan() { [ -f vessel ] && ./vessel artisan "$@" || php artisan "$@" }; __artisan'
-alias c='function __composer() { [ -f vessel ] && ./vessel composer "$@" || php composer "$@" }; __composer'
-alias npmr='function __npm() { [ -f vessel ] && ./vessel npm run "$@" || npm run "$@" }; __npm'
-alias y='function __yarn() { [ -f vessel ] && ./vessel yarn "$@" || yarn "$@" }; __yarn'
-alias v='function __vessel() { ./vessel yarn "$@" }; __vessel'
+alias a='function __artisan() { php artisan "$@" }; __artisan'
+alias c='function __composer() { php composer "$@" }; __composer'
+alias npmr='function __npm() { npm run "$@" }; __npm'
+alias y='function __yarn() { yarn "$@" }; __yarn'
 
 # Magento
 alias m='./magento'
@@ -74,15 +73,14 @@ alias mcf='./magento cache:flush config layout block_html full_page'
 alias mss='rm -Rf ./pub/static/frontend && ./magento setup:static-content:deploy de_DE -f && mcc'
 
 # Docker
-alias dstart='[ -f vessel ] && ./vessel start || docker-compose start'
-alias dstop='[ -f vessel ] && ./vessel stop || docker-compose stop'
+alias dstart='docker-compose start'
+alias dstop='docker-compose stop'
 alias dbuild='docker-compose build'
-alias dup='[ -f vessel ] && (./vessel stop && ./vessel start) || (docker-compose stop && docker-compose up)'
-alias drm='docker rm $(docker ps -aq)'
-alias drmi='docker rmi $(docker images -q)'
-
-# Docker vessel specific
-alias vinit='[ ! -f vessel ] && (composer require shipping-docker/vessel && php artisan vendor:publish --provider="Vessel\VesselServiceProvider" && bash vessel init)'
+alias dup='docker-compose up'
+alias drm='docker rm $(docker ps -aq) --force'
+alias drmi='docker rmi $(docker images -q) --force'
+alias drmv='docker volume rm $(docker volume ls -q)'
+alias drma='drm && drmi'
 
 # git
 alias nah='git reset --hard;git clean -df'
@@ -119,9 +117,6 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 # Empty the Trash on all mounted volumes and the main HDD
 # Also, clear Apple’s System Logs to improve shell startup speed
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
-
-# Enable aliases to be sudo’ed
-alias sudo='sudo '
 
 # Scrape webpage
 alias scrape="scrapeUrl"
