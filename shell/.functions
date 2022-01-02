@@ -1,6 +1,6 @@
 # Switch PHP versions
 phpv() {
-    if [ $1 = "7.4" ]; then
+    if [ $1 = "8" ]; then
         valet use php
     else
         valet use php@$1
@@ -10,11 +10,9 @@ phpv() {
     source ~/.zshrc
 }
 
-alias php70="phpv 7.0"
-alias php71="phpv 7.1"
-alias php72="phpv 7.2"
 alias php73="phpv 7.3"
 alias php74="phpv 7.4"
+alias php8="phpv 8"
 
 # Create a new directory and enter it
 function mkd() {
@@ -61,14 +59,6 @@ function removehost() {
    ssh-keygen -R "$1"
 }
 
-function deploy() {
-  project="$1";
-  env="$2";
-  start_dir=$(pwd);
-  cd ~/Sites/_helpers && envoy run deploy --conf=EnvoyGlobalDeployments.blade.php --project=${project} --env=${env};
-  cd ${start_dir};
-}
-
 function weather() {
    city="$1"
 
@@ -77,18 +67,6 @@ function weather() {
    fi
 
    eval "curl http://wttr.in/${city}"
-}
-
-alias mysqladm='mysql -u root'
-
-function db {
-    if [ "$1" = "refresh" ]; then
-        mysql -uroot -e "drop database $2; create database $2"
-    elif [ "$1" = "create" ]; then
-        mysql -uroot -e "create database $2"
-    elif [ "$1" = "drop" ]; then
-        mysql -uroot -e "drop database $2"
-    fi
 }
 
 # Scrape a single webpage with all assets
