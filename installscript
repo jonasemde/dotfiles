@@ -90,6 +90,10 @@ echo 'install svgo'
 echo '------------'
 npm install -g svgo
 
+echo 'Install imagemagick'
+echo '-------------------'
+brew install imagemagick
+
 echo 'Install composer'
 echo '----------------'
 EXPECTED_COMPOSER_CHECKSUM="$(curl https://composer.github.io/installer.sig)"
