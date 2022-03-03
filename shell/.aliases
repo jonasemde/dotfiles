@@ -50,16 +50,6 @@ alias npmr='function __npm() { [ -f vessel ] && ./vessel npm run "$@" || npm run
 alias y='function __yarn() { [ -f vessel ] && ./vessel yarn "$@" || yarn "$@" }; __yarn'
 alias v='function __vessel() { ./vessel yarn "$@" }; __vessel'
 
-# Magento
-alias m='./magento'
-alias mce='./magento cache:enable'
-alias mcd='./magento cache:disable config layout block_html full_page'
-alias mthe='./magento dev:template-hints:enable && mcc'
-alias mthd='./magento dev:template-hints:disable && mcc'
-alias mcc='./magento cache:clean config layout block_html full_page'
-alias mcf='./magento cache:flush config layout block_html full_page'
-alias mss='rm -Rf ./pub/static/frontend && ./magento setup:static-content:deploy de_DE -f && mcc'
-
 # Docker
 alias dstart='[ -f vessel ] && ./vessel start || docker-compose start'
 alias dstop='[ -f vessel ] && ./vessel stop || docker-compose stop'
