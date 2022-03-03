@@ -10,6 +10,8 @@ rm -rf $HOME/.oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 chsh -s $(which zsh)
 
+git clone https://github.com/jessarcher/zsh-artisan.git $HOME/.oh-my-zsh/custom/plugins/artisan
+
 # symlink bash_profile
 rm $HOME/.bash_profile
 ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile

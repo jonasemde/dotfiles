@@ -2,6 +2,7 @@
 export PATH=/usr/local/bin:$PATH
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 export PATH=/Users/Shared/DBngin/mysql/8.0.27/bin:$PATH
+export PATH=~/.composer/vendor/bin/:$PATH
 export PATH=~/.dotfiles/bin/:$PATH
 export PATH=./node_modules/.bin/:$PATH
 export PATH=./vendor/bin:$PATH
