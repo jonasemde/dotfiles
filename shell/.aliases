@@ -57,6 +57,7 @@ alias dbuild='docker-compose build'
 alias dup='[ -f vessel ] && (./vessel stop && ./vessel start) || (docker-compose stop && docker-compose up)'
 alias drm='docker rm $(docker ps -aq)'
 alias drmi='docker rmi $(docker images -q)'
+alias dreset='docker system prune -a'
 
 # git
 alias nah='git reset --hard;git clean -df'
