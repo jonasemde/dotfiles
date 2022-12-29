@@ -69,9 +69,8 @@ alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %
 # Fast open
 alias o="open ."
 
-
 # Valet use
-alias vu="rm -Rf ~/.composer/vendor && composer global update && valet use"
+alias vu='function __valet_use() { valet use "$@" && rm -Rf ~/.composer/vendor && composer global update }; __valet_use'
 
 # PhpStorm
 alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
