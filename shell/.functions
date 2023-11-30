@@ -17,32 +17,16 @@ function pf() {
 
 # Switch PHP versions
 vu() {
-    if [ $1 = "8" ]; then
+    if [ -z "$1" ]; then
         valet use php
     else
         valet use php@$1
+        sed -in "s/128M/512M/g" /usr/local/etc/php/$1/conf.d/php-memory-limits.ini
     fi
-    sed -in "s/128M/512M/g" /usr/local/etc/php/$1/conf.d/php-memory-limits.ini
     rm -Rf ~/.composer/vendor
     composer global update
     source ~/.zshrc
 }
-
-# Full
-alias php7.4="vu 7.4"
-alias php8="vu 8"
-alias php8.1="vu 8.1"
-alias php8.2="vu 8.2"
-alias php8.3="vu 8.3"
-alias php8.4="vu 8.4"
-
-# Shorthand
-alias php74="php7.4"
-alias php8="php8"
-alias php81="php8.1"
-alias php82="php8.2"
-alias php83="php8.3"
-alias php84="php8.4"
 
 # Create a new directory and enter it
 function mkd() {
