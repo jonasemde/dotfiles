@@ -118,6 +118,7 @@ composer global require laravel/valet
 valet install
 cd ~/Sites
 valet park
+valet trust
 
 echo 'install mailhog'
 echo '------------'
