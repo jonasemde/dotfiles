@@ -5,8 +5,8 @@
 [color]
 	ui = true
 [core]
-	editor = subl
-	excludesfile = /Users/jonasemde/.global-gitignore
+	editor = code -w
+	excludesfile = ~/.global-gitignore
     ignorecase = false
 [diff]
 	tool = diffmerge

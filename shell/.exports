@@ -1,7 +1,5 @@
 # Dev bin path
-export PATH=/usr/local/bin:$PATH
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
-export PATH=/Users/Shared/DBngin/mysql/8.0.27/bin:$PATH
 export PATH=~/.composer/vendor/bin/:$PATH
 export PATH=~/.dotfiles/bin/:$PATH
 export PATH=./node_modules/.bin/:$PATH
@@ -20,10 +18,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Ruby
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
 
-# Make vim the default editor
-export EDITOR="subl -w"
+# Make VS Code the default editor
+export EDITOR="code -w"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -40,15 +38,8 @@ export LC_ALL="de_DE.UTF-8"
 # Highlight section titles in manual pages
 export LESS_TERMCAP_md="$ORANGE"
 
-# Don’t clear the screen after quitting a manual page
+# Don't clear the screen after quitting a manual page
 export MANPAGER="less -X"
-
-# Always enable colored `grep` output
-export GREP_OPTIONS="--color=auto"
 
 # Cask folder
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# For compilers to find ncurses you may need to set
-export LDFLAGS="-L/usr/local/opt/ncurses/lib"
-export CPPFLAGS="-I/usr/local/opt/ncurses/include"
