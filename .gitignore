@@ -21,3 +21,7 @@
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# User-specific files with hardcoded paths (use .template versions)
+com.user.daily-updates.plist
+bin/daily-updates.sh

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+Daily Updates LaunchAgent - Automates system package updates
+
+TEMPLATE FILE - Copy this to com.user.daily-updates.plist and replace placeholders
+
+IMPORTANT: Before using this file, replace /ABSOLUTE/PATH/TO/HOME with your actual home directory path
+           Example: /Users/yourusername
+           LaunchAgents require absolute paths - tilde (~) and $HOME do NOT work in plist files!
+
+To create your working version:
+  cp com.user.daily-updates.plist.template com.user.daily-updates.plist
+  sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" com.user.daily-updates.plist
+
+SETUP:
+  1. Replace /ABSOLUTE/PATH/TO/HOME below with your full home directory path
+  2. cp ~/.dotfiles/com.user.daily-updates.plist ~/Library/LaunchAgents/
+  3. launchctl load ~/Library/LaunchAgents/com.user.daily-updates.plist
+
+MANAGING:
+  Load (enable):    launchctl load ~/Library/LaunchAgents/com.user.daily-updates.plist
+  Unload (disable): launchctl unload ~/Library/LaunchAgents/com.user.daily-updates.plist
+  Reload (refresh): launchctl unload ~/Library/LaunchAgents/com.user.daily-updates.plist && \
+                    launchctl load ~/Library/LaunchAgents/com.user.daily-updates.plist
+  Check status:     launchctl list | grep daily-updates
+  Run manually:     launchctl start com.user.daily-updates
+
+LOGS:
+  Standard output:  tail -f /tmp/daily-updates.log
+  Error output:     tail -f /tmp/daily-updates-error.log
+
+CONFIGURATION:
+  - Currently runs twice daily at 10:00 AM and 6:00 PM
+  - Modify StartCalendarInterval to change schedule
+  - Remember to reload after making changes
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.daily-updates</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>-l</string>
+        <!-- TODO: Replace /ABSOLUTE/PATH/TO/HOME with your actual home directory (e.g., /Users/yourusername) -->
+        <string>/ABSOLUTE/PATH/TO/HOME/.dotfiles/bin/daily-updates.sh</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>10</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>18</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/daily-updates.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/daily-updates-error.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
