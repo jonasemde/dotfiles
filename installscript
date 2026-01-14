@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # hide "last login" line when starting a new terminal session
 touch $HOME/.hushlogin
@@ -6,47 +7,50 @@ touch $HOME/.hushlogin
 # install zsh
 echo 'install oh-my-zhs'
 echo '-----------------'
-rm -rf $HOME/.oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-chsh -s $(which zsh)
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+# Set zsh as default shell
+ZSH_PATH=$(which zsh)
+if ! grep -q "$ZSH_PATH" /etc/shells; then
+  echo "Adding $ZSH_PATH to /etc/shells. You might be asked for your password."
+  sudo sh -c "echo $ZSH_PATH >> /etc/shells"
+fi
+chsh -s "$ZSH_PATH"
 
 git clone https://github.com/jessarcher/zsh-artisan.git $HOME/.oh-my-zsh/custom/plugins/artisan
 
 # symlink bash_profile
-rm $HOME/.bash_profile
-ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
+ln -sf $HOME/.dotfiles/shell/.bash_profile $HOME/.bash_profile
 
 # symlink profile
-rm $HOME/.profile
-ln -s $HOME/.dotfiles/shell/.bash_profile $HOME/.profile
+ln -sf $HOME/.dotfiles/shell/.bash_profile $HOME/.profile
 
 # symlink zsh prefs
-rm $HOME/.zshrc
-ln -s $HOME/.dotfiles/shell/.zshrc $HOME/.zshrc
+ln -sf $HOME/.dotfiles/shell/.zshrc $HOME/.zshrc
 
 # symlink vim prefs
-rm $HOME/.vimrc
-ln -s $HOME/.dotfiles/shell/.vimrc $HOME/.vimrc
+ln -sf $HOME/.dotfiles/shell/.vimrc $HOME/.vimrc
 
 # vim config
-rm -R $HOME/.vim
-ln -s $HOME/.dotfiles/shell/.vim $HOME/.vim
+ln -sf $HOME/.dotfiles/shell/.vim $HOME/.vim
 
 echo 'Install homebrew'
 echo '----------------'
-echo install homebrew
-sudo rm -rf /usr/local/Cellar /usr/local/.git && brew cleanup
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+if ! command -v brew &> /dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
 echo 'install git'
 echo '------------'
 brew install git
 
 # global git config
-ln -s $HOME/.dotfiles/shell/.gitconfig $HOME/.gitconfig
+ln -sf $HOME/.dotfiles/shell/.gitconfig $HOME/.gitconfig
 
 # global gitigore
-ln -s $HOME/.dotfiles/shell/.global-gitignore $HOME/.global-gitignore
+ln -sf $HOME/.dotfiles/shell/.global-gitignore $HOME/.global-gitignore
 git config --global core.excludesfile $HOME/.global-gitignore
 
 echo 'install httrack'
@@ -57,18 +61,14 @@ echo 'install z'
 echo '-------------'
 brew install z
 
-#activate z
-cd ~/.dotfiles/shell
-chmod +x z.sh
-
 echo 'Install ack'
 echo '-----------'
 brew install ack
 
-echo 'Install php'
-echo '-----------'
-brew install php
-brew install php@7.4
+# echo 'Install php'
+# echo '-----------'
+# PHP is managed by Herd, so we dont need to install it here.
+# brew install php
 
 echo 'Install node'
 echo '-----------'
@@ -77,7 +77,7 @@ brew install node
 echo 'Configure npm'
 echo '-------------'
 # Create a directory for global packages and tell npm where to store globally installed packages
-mkdir "${HOME}/.npm-packages"
+mkdir -p "${HOME}/.npm-packages"
 npm config set prefix "${HOME}/.npm-packages"
 
 echo 'Install zsh-autosuggestions'
@@ -98,42 +98,44 @@ brew install imagemagick
 
 echo 'Install composer'
 echo '----------------'
-EXPECTED_COMPOSER_CHECKSUM="$(curl https://composer.github.io/installer.sig)"
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-ACTUAL_COMPOSER_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")"
-if [ "$EXPECTED_COMPOSER_CHECKSUM" != "$ACTUAL_COMPOSER_CHECKSUM" ]
-then
-    >&2 echo 'ERROR: Invalid installer checksum'
-    rm composer-setup.php
-    exit 1
-fi
-php composer-setup.php
-rm composer-setup.php
-mkdir -p /usr/local/bin
-mv composer.phar /usr/local/bin/composer
+brew install composer
 
-echo 'install valet'
-echo '------------'
-composer global require laravel/valet
-valet install
-cd ~/Sites
-valet park
-valet trust
+# echo 'install valet'
+# echo '------------'
+# The .zshrc is configured for Herd, so we are not installing Valet.
+# If you want to use Valet, uncomment these lines and remove the Herd config from .zshrc
+# composer global require laravel/valet
+# valet install
+# cd ~/Sites
+# valet park
+# valet trust
 
 echo 'install mailhog'
 echo '------------'
 brew install mailhog
 brew services start mailhog
-valet proxy mailhog.test http://127.0.0.1:8025
+# If using Valet, you can proxy mailhog
+# valet proxy mailhog.test http://127.0.0.1:8025
 
 echo 'Install some nice quicklook plugins'
 echo '-----------------------------------'
-brew install --cask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzip  suspicious-package
+brew install --cask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzip suspicious-package
+
+echo 'Automate daily updates'
+echo '------------------------'
+cp com.user.daily-updates.plist.template com.user.daily-updates.plist
+sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" com.user.daily-updates.plist
+cp bin/daily-updates.sh.template bin/daily-updates.sh
+sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" bin/daily-updates.sh
+chmod +x bin/daily-updates.sh
+mkdir -p ~/Library/LaunchAgents
+cp com.user.daily-updates.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/com.user.daily-updates.plist
 
 
 # echo 'install system apps'
 # echo '------------'
-# brew cask install --force screaming-frog-seo-spider sketch alfred google-hangouts spotify anydesk google-web-designer sublime-text balenaetcher grammarly tableplus bartender iterm2 teamviewer calibre lingo the-unarchiver craftmanager macdown tower diffmerge mamp vlc docker moom whatsapp dropbox phpstorm xmind evernote poedit zeplin firefox postman
+# brew install --cask --force screaming-frog-seo-spider sketch alfred google-hangouts spotify anydesk google-web-designer sublime-text balenaetcher grammarly tableplus bartender iterm2 teamviewer calibre lingo the-unarchiver craftmanager macdown tower diffmerge mamp vlc docker moom whatsapp dropbox phpstorm xmind evernote poedit zeplin firefox postman
 
 echo '++++++++++++++++++++++++++++++'
 echo '++++++++++++++++++++++++++++++'

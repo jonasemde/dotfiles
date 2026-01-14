@@ -115,3 +115,26 @@ function scheduler () {
 function silent() {
    "$@" >& /dev/null
 }
+
+# A safer way to discard all uncommitted changes in git
+function nah() {
+    read -p "Are you sure you want to discard all uncommitted changes? This is irreversible. (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        git reset --hard; git clean -df
+    else
+        echo "Canceled."
+    fi
+}
+
+# A safer way to empty the trash
+function emptytrash() {
+    read -p "Are you sure you want to empty the trash? This is irreversible. (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash
+        echo "Trash emptied."
+    else
+        echo "Canceled."
+    fi
+}

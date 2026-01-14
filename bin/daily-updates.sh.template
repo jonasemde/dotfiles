@@ -1,4 +1,5 @@
 #!/bin/zsh
+set -e
 
 # TEMPLATE FILE - Copy this to daily-updates.sh and replace placeholders
 #
@@ -37,7 +38,7 @@ echo "Updating Homebrew casks..."
 
 echo ""
 echo "Updating global npm packages..."
-sudo npm update -g
+npm update -g
 
 echo ""
 echo "Updating global Composer packages..."

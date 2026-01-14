@@ -1,4 +1,4 @@
- #!/usr/bin/env bash
+#!/usr/bin/env bash
 echo 'start osx/set-defaults.sh'
 
 # Close any open System Settings panes, to prevent them from overriding
@@ -15,11 +15,14 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Set computer name (as done via System Settings → General → Sharing)
-sudo scutil --set ComputerName "Jonas MBP"
-sudo scutil --set HostName "jonas-mbp"
-sudo scutil --set LocalHostName "JonasMBP"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "jonas-mbp"
+echo "Please enter the desired computer name (e.g., 'My MacBook Pro'):"
+read -r COMPUTER_NAME
+sudo scutil --set ComputerName "$COMPUTER_NAME"
+sudo scutil --set HostName "${COMPUTER_NAME// /-}"
+sudo scutil --set LocalHostName "${COMPUTER_NAME// /-}"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "${COMPUTER_NAME// /-}"
 sudo dscacheutil -flushcache
+
 
 ###############################################################################
 # General UI/UX                                                               #
@@ -28,7 +31,7 @@ sudo dscacheutil -flushcache
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
 
-# Menu bar: disable transparency
+# Menu bar: disable transparency (Note: May not work on recent macOS versions)
 #defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
 
 # Set sidebar icon size to medium
@@ -78,16 +81,19 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 ###############################################################################
 
 # Disable hibernation (speeds up entering sleep mode)
-sudo pmset -a hibernatemode 0
+# Note: This is not recommended for modern Macs as it can interfere with Power Nap and other features.
+# The default is 3 (binary image and memory)
+# sudo pmset -a hibernatemode 0
 
-# Disable the sudden motion sensor as it’s not useful for SSDs
-sudo pmset -a sms 0
+# Disable the sudden motion sensor as it’s not useful for SSDs (and not present in modern Macs)
+# sudo pmset -a sms 0
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
 
 # Increase sound quality for Bluetooth headphones/headsets
+# Note: The effectiveness of these settings on modern macOS with AAC/AptX is debatable.
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Max (editable)" 80
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" 80
 defaults write com.apple.BluetoothAudioAgent "Apple Initial Bitpool (editable)" 80
@@ -101,8 +107,7 @@ defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool Min" 80
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Set language and text formats
-# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
-# `Inches`, `en_GB` with `en_US`, and `true` with `false`.
+echo "Configuring language and locale to German (de_DE). You can change this in the script."
 defaults write NSGlobalDomain AppleLanguages -array "de"
 defaults write NSGlobalDomain AppleLocale -string "de_DE@currency=EUR"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
@@ -209,7 +214,7 @@ defaults write com.apple.dock show-process-indicators -bool false
 # Wipe all (default) app icons from the Dock
 # This is only really useful when setting up a new Mac, or if you don’t use
 # the Dock to launch apps.
-defaults write com.apple.dock persistent-apps -array ""
+# defaults write com.apple.dock persistent-apps -array ""
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
@@ -285,7 +290,7 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
 	"Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
-	"Terminal" "Transmission" "Twitter" "iCal"; do
+	"Terminal" "Transmission" "iCal"; do
 	killall "${app}" > /dev/null 2>&1
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
