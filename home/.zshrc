@@ -107,6 +107,9 @@ if [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]; then
     \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Load nvm bash_completion
 fi
 
+# Python - unversioned symlinks (python, pip instead of python3, pip3)
+export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
+
 # fzf - Fuzzy finder
 if command -v fzf &> /dev/null; then
     eval "$(fzf --zsh)"
