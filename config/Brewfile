@@ -15,18 +15,14 @@ brew "gh"               # GitHub CLI
 
 # Languages & Runtimes
 brew "node"
-brew "php"
-brew "php@8.2"
 brew "python@3.14"
 brew "go"
+brew "golangci-lint"
 
 # Package Managers & Build Tools
 brew "composer"
-brew "cmake"
 brew "autoconf"
-brew "libtool"
 brew "pkg-config"
-brew "swig"
 
 # Node Version Management
 brew "nvm"
@@ -110,7 +106,7 @@ brew "tidy-html5"       # HTML validator
 # MAIL & COMMUNICATION
 # =============================================================================
 
-brew "swaks"            # SMTP test tool
+# brew "swaks"            # SMTP test tool
 
 # =============================================================================
 # SECURITY & ENCRYPTION
