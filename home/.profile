@@ -1,0 +1,1 @@
+[[ -e ~/.dotfiles/home/.exports ]] && source ~/.dotfiles/home/.exports

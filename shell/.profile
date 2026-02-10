@@ -1,1 +1,0 @@
-[[ -e ~/.dotfiles/shell/.exports ]] && source ~/.dotfiles/shell/.exports

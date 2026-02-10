@@ -1,0 +1,148 @@
+# Run tests
+function p() {
+   if [ -f vendor/bin/pest ]; then
+      vendor/bin/pest "$@"
+   else
+      vendor/bin/phpunit "$@"
+   fi
+}
+
+function pf() {
+   if [ -f vendor/bin/pest ]; then
+      vendor/bin/pest --filter "$@"
+   else
+      vendor/bin/phpunit --filter "$@"
+   fi
+}
+
+# Switch PHP versions (requires Herd, which provides the valet command)
+vu() {
+    if ! command -v valet &> /dev/null; then
+        echo "Error: valet command not found. Make sure Herd is installed."
+        return 1
+    fi
+
+    if [ -z "$1" ]; then
+        valet use php
+    else
+        valet use php@$1
+        # Update PHP memory limit if config file exists
+        if [ -f "/opt/homebrew/etc/php/$1/conf.d/php-memory-limits.ini" ]; then
+            sed -i '' "s/128M/512M/g" /opt/homebrew/etc/php/$1/conf.d/php-memory-limits.ini
+        fi
+    fi
+    rm -Rf ~/.composer/vendor
+    composer global update
+    source ~/.zshrc
+}
+
+# Create a new directory and enter it
+function mkd() {
+   mkdir -p "$@" && cd "$@"
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-9000}"
+  sleep 2 && open "http://localhost:${port}/" &
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
+  python3 -c $'import http.server;\nimport socketserver;\nhandler = http.server.SimpleHTTPRequestHandler;\nhandler.extensions_map[""] = "text/plain";\nfor key, value in handler.extensions_map.items():\n\thandler.extensions_map[key] = value + ";charset=UTF-8";\nwith socketserver.TCPServer(("", '$port'), handler) as httpd:\n\tprint("Server running at http://localhost:'$port'/");\n\thttpd.serve_forever();'
+}
+
+# Start a PHP server from a directory, optionally specifying the port
+# (Requires PHP 5.4.0+.)
+function phpserver() {
+  local port="${1:-4000}"
+  local ip=$(ipconfig getifaddr en0)
+  sleep 2 && open "http://${ip}:${port}/" &
+  php -S "${ip}:${port}"
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh
+	else
+		local arg=-sh
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@"
+	else
+		du $arg .[^.]* *
+	fi
+}
+
+archive () {
+   zip -r "$1".zip -i "$1" ;
+}
+
+function removehost() {
+   ssh-keygen -R "$1"
+}
+
+function weather() {
+   city="$1"
+
+   if [ -z "$city" ]; then
+      city="Bonn"
+   fi
+
+   curl "https://wttr.in/${city}"
+}
+
+# Scrape a single webpage with all assets
+function scrapeUrl() {
+    wget --adjust-extension --convert-links --page-requisites --span-hosts --no-host-directories "$1"
+}
+
+function opendb () {
+   [ ! -f .env ] && { echo "No .env file found."; exit 1; }
+
+   DB_CONNECTION=$(grep DB_CONNECTION .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+   DB_HOST=$(grep DB_HOST .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+   DB_PORT=$(grep DB_PORT .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+   DB_DATABASE=$(grep DB_DATABASE .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+   DB_USERNAME=$(grep DB_USERNAME .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+   DB_PASSWORD=$(grep DB_PASSWORD .env | grep -v -e '^\s*#' | cut -d '=' -f 2-)
+
+   DB_URL="${DB_CONNECTION}://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}"
+
+   echo "Opening ${DB_URL}"
+   open $DB_URL
+}
+
+function scheduler () {
+    while :; do
+        php artisan schedule:run
+    echo "Sleeping 60 seconds..."
+        sleep 60
+    done
+}
+
+function silent() {
+   "$@" >& /dev/null
+}
+
+# A safer way to discard all uncommitted changes in git
+function nah() {
+    read -p "Are you sure you want to discard all uncommitted changes? This is irreversible. (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        git reset --hard; git clean -df
+    else
+        echo "Canceled."
+    fi
+}
+
+# A safer way to empty the trash
+function emptytrash() {
+    read -p "Are you sure you want to empty the trash? This is irreversible. (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash
+        echo "Trash emptied."
+    else
+        echo "Canceled."
+    fi
+}

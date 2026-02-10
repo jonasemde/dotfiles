@@ -1,0 +1,184 @@
+#!/bin/bash
+#
+# Install dotfiles
+
+set -e  # Exit on error (but we use || true for optional steps)
+
+# Colors
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+step() { echo ""; echo -e "${BLUE}➜${NC} $1"; }
+success() { echo -e "${GREEN}✓${NC} $1"; }
+warn() { echo -e "${YELLOW}⚠${NC} $1"; }
+error() { echo -e "${RED}✗${NC} $1"; exit 1; }
+
+echo ""
+step "Install Dotfiles"
+echo ""
+warn "This will install/update your terminal setup"
+echo ""
+read -p "Continue? (y/n) " -n 1 -r
+echo ""
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo ""
+    step "Cancelled"
+    echo ""
+    exit 0
+fi
+
+echo ""
+sudo -v
+
+# Start
+touch ~/.hushlogin
+step "Installing Oh My Zsh"
+if [ ! -d ~/.oh-my-zsh ]; then
+    rm -rf ~/.oh-my-zsh
+    curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended || warn "Oh My Zsh installation failed"
+fi
+
+# Install zsh-artisan plugin for Laravel
+if [ ! -d ~/.oh-my-zsh/custom/plugins/artisan ]; then
+    git clone https://github.com/jessarcher/zsh-artisan.git ~/.oh-my-zsh/custom/plugins/artisan || warn "zsh-artisan plugin already exists"
+fi
+success "Oh My Zsh installed"
+
+# Set zsh as default shell
+step "Setting Zsh as default shell"
+ZSH_PATH=$(which zsh)
+if ! grep -q "$ZSH_PATH" /etc/shells; then
+    echo "Adding $ZSH_PATH to /etc/shells. You might be asked for your password."
+    sudo sh -c "echo $ZSH_PATH >> /etc/shells"
+fi
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    chsh -s "$ZSH_PATH"
+fi
+success "Zsh configured as default shell"
+
+# Git configuration
+step "Configuring Git"
+ln -sf ~/.dotfiles/home/.gitconfig ~/.gitconfig
+ln -sf ~/.dotfiles/home/.global-gitignore ~/.global-gitignore
+git config --global core.excludesfile ~/.global-gitignore
+success "Git configured"
+
+# Symlinks
+step "Creating symlinks"
+# Backup existing config files
+BACKUP_DIR=~/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)
+for file in ~/.zshrc ~/.vimrc ~/.vim ~/.bash_profile ~/.profile; do
+    if [ -e "$file" ] && [ ! -L "$file" ]; then
+        mkdir -p "$BACKUP_DIR"
+        cp -r "$file" "$BACKUP_DIR/"
+        info "Backed up $(basename $file) to $BACKUP_DIR"
+    fi
+done
+rm -f ~/.zshrc ~/.vimrc ~/.vim ~/.bash_profile ~/.profile
+ln -sf ~/.dotfiles/home/.zshrc ~/.zshrc
+ln -sf ~/.dotfiles/home/.vimrc ~/.vimrc
+ln -sf ~/.dotfiles/home/.vim ~/.vim
+ln -sf ~/.dotfiles/home/.bash_profile ~/.bash_profile
+ln -sf ~/.dotfiles/home/.profile ~/.profile
+
+# Create mackup config if it exists
+if [ -f ~/.dotfiles/macos/.mackup.cfg ]; then
+    ln -sf ~/.dotfiles/macos/.mackup.cfg ~/.mackup.cfg
+fi
+success "Symlinks created"
+
+# NPM setup
+step "Configuring npm"
+mkdir -p ~/.npm-packages
+npm config set prefix ~/.npm-packages || warn "npm config failed"
+success "npm configured"
+
+# Homebrew
+step "Installing Homebrew"
+if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+success "Homebrew installed"
+
+# Install all packages from Brewfile
+step "Installing packages from Brewfile"
+brew bundle --file=~/.dotfiles/config/Brewfile || warn "Some packages failed (likely already installed)"
+success "Brewfile processed"
+
+# fnm - Node.js version manager
+step "Setting up fnm"
+if command -v fnm &>/dev/null; then
+    eval "$(fnm env --use-on-cd)" || warn "fnm activation failed"
+    fnm install --lts || warn "fnm install failed"
+    fnm use lts-latest || warn "fnm use failed"
+    success "fnm configured"
+else
+    warn "fnm not found, install it with: brew install fnm"
+fi
+
+# Global npm packages
+step "Installing global npm packages"
+npm install -g svgo || warn "svgo already installed or failed"
+npm install -g agent-browser || warn "agent-browser already installed or failed"
+if command -v agent-browser &>/dev/null; then
+    agent-browser install 2>/dev/null || warn "agent-browser setup skipped"
+fi
+success "npm packages processed"
+
+# Start services
+step "Starting services"
+brew services start mailhog || warn "mailhog already running or not installed"
+brew services start mysql || warn "mysql already running or not installed"
+success "Services processed"
+
+# Daily updates automation
+step "Setting up daily updates automation"
+if [ -f ~/.dotfiles/com.user.daily-updates.plist.template ]; then
+    cp ~/.dotfiles/com.user.daily-updates.plist.template ~/.dotfiles/com.user.daily-updates.plist
+    sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" ~/.dotfiles/com.user.daily-updates.plist
+
+    if [ -f ~/.dotfiles/bin/daily-updates.sh.template ]; then
+        cp ~/.dotfiles/bin/daily-updates.sh.template ~/.dotfiles/bin/daily-updates.sh
+        sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" ~/.dotfiles/bin/daily-updates.sh
+        chmod +x ~/.dotfiles/bin/daily-updates.sh
+    fi
+
+    mkdir -p ~/Library/LaunchAgents
+    cp ~/.dotfiles/com.user.daily-updates.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.daily-updates.plist 2>/dev/null || warn "LaunchAgent already loaded or bootstrap failed"
+    success "Daily updates configured"
+else
+    warn "Daily updates template not found, skipping"
+fi
+
+# Claude Code setup
+echo ""
+read -p "Install Claude Code? (y/n) " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    bash ~/.dotfiles/bin/install-claude-code || warn "Claude Code setup had issues"
+else
+    warn "Skipping Claude Code installation"
+fi
+
+# Done
+echo ""
+success "Installation complete!"
+echo ""
+step "Next steps:"
+echo "  • Configure iTerm2: Set font to 'MesloLGM Nerd Font Mono' and enable Powerline glyphs"
+echo "  • Import iTerm theme: config/iterm/*.itermcolors"
+echo "  • Restart terminal or run: exec zsh"
+echo ""
+echo "Optional:"
+echo "  • Restore settings: mackup restore (if you have backups)"
+echo "  • Customize aliases: ~/.dotfiles-custom/shell/.aliases"
+echo "  • Set macOS defaults: ~/.dotfiles/macos/set-defaults.sh"
+echo "  • Discover more Claude skills: https://skills.sh"
+echo ""

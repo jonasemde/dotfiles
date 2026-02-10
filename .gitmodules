@@ -1,12 +1,12 @@
-[submodule "shell/.vim/bundle/command-t"]
-	path = shell/.vim/bundle/command-t
-[submodule "shell/.vim/bundle/nerdtree"]
-	path = shell/.vim/bundle/nerdtree
-[submodule "shell/.vim/bundle/sparkup"]
-	path = shell/.vim/bundle/sparkup
-[submodule "shell/.vim/bundle/vim-fugitive"]
-	path = shell/.vim/bundle/vim-fugitive
-[submodule "shell/.vim/bundle/vim-vinegar"]
-	path = shell/.vim/bundle/vim-vinegar
-[submodule "shell/.vim/bundle/Vundle.vim"]
-	path = shell/.vim/bundle/Vundle.vim
+[submodule "home/.vim/bundle/command-t"]
+	path = home/.vim/bundle/command-t
+[submodule "home/.vim/bundle/nerdtree"]
+	path = home/.vim/bundle/nerdtree
+[submodule "home/.vim/bundle/sparkup"]
+	path = home/.vim/bundle/sparkup
+[submodule "home/.vim/bundle/vim-fugitive"]
+	path = home/.vim/bundle/vim-fugitive
+[submodule "home/.vim/bundle/vim-vinegar"]
+	path = home/.vim/bundle/vim-vinegar
+[submodule "home/.vim/bundle/Vundle.vim"]
+	path = home/.vim/bundle/Vundle.vim

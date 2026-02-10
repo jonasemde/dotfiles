@@ -1,0 +1,46 @@
+# Dev bin path
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+export PATH=~/.composer/vendor/bin/:$PATH
+export PATH=~/.dotfiles/bin/:$PATH
+export PATH=./node_modules/.bin/:$PATH
+export PATH=./vendor/bin:$PATH
+
+# homebrew required vars
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/icu4c/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/icu4c/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/icu4c/lib/pkgconfig"
+
+# Node version management is handled by nvm (loaded in .zshrc)
+# Use 'nvm install --lts' and 'nvm use --lts'
+
+# Ruby
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+
+# Make VS Code the default editor
+export EDITOR="code -w"
+
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL=ignoredups
+
+# Make some commands not show up in history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# Prefer DE German and use UTF-8
+export LANG="de_DE.UTF-8"
+export LC_ALL="de_DE.UTF-8"
+
+# Terminal colors for man pages
+export ORANGE='\033[0;33m'
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_md="$ORANGE"
+
+# Don't clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# Cask folder
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"

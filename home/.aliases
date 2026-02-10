@@ -1,0 +1,122 @@
+# Defaults
+alias np="source ~/.zshrc"
+alias dotfiles="code ~/.dotfiles"
+alias .="dotfiles"
+alias .dotfiles="dotfiles"
+alias hosts="code /etc/hosts"
+alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
+alias fresh='clear; echo -e "\033c\e[3J" && source ~/.zshrc'
+alias f='fresh'
+# Use eza if available (modern ls replacement with icons)
+if command -v eza &> /dev/null; then
+    alias ls='eza -la --icons --group-directories-first'
+    alias l='eza -la --icons --group-directories-first'
+    alias ll='eza -l --icons --group-directories-first'
+    alias tree='eza --tree --icons'
+else
+    alias ls='ls -laF'
+    alias l="ls -laF"
+fi
+alias g="grep '|'' ./* -R"
+alias wget="curl -O"
+alias h="cd ~/"
+alias s="cd ~/Sites/"
+# Use bin/update script for comprehensive updates (dotfiles, brew, npm, composer)
+alias update="~/.dotfiles/bin/update"
+# Note: 'p' and 'pf' are defined as functions in .functions (pest/phpunit auto-detection)
+alias pw="phpunit-watcher watch"
+alias pwf="phpunit-watcher watch --filter "
+alias mysqladm="mysql -u root"
+alias killDrive="sudo kill -9 $(ps aux | grep 'Google Drive' | grep -v grep | awk '{print $2}')"
+
+# Tool replacements
+alias p1='ping -c1'
+
+# NPM, Composer & Laravel
+alias a="php artisan"
+alias c="composer"
+alias el='envoy run list'
+alias nb='npm run build'
+alias nd='npm run dev'
+alias nw='npm run dev'
+alias cu='composer update'
+alias ci='composer install'
+alias cda='composer dump-autoload -o'
+alias ccc='composer clear-cache'
+alias cgu='composer global update'
+alias amf='php artisan migrate:fresh'
+alias amfs='php artisan migrate:fresh --seed'
+alias amr='php artisan migrate:refresh'
+alias amrs='php artisan migrate:refresh --seed'
+alias ac='acc && avc && aconfig-clear'
+alias aconfig-clear='php artisan config:clear'
+alias acc='php artisan cache:clear'
+alias avc='php artisan view:clear'
+alias arl='php artisan route:list'
+alias pp='php artisan test --parallel'
+alias d='php artisan dusk'
+alias sail='./vendor/bin/sail'
+alias larastan="vendor/bin/phpstan analyse"
+
+# Docker
+alias dstart='docker-compose start'
+alias dstop='docker-compose stop'
+alias dbuild='docker-compose build'
+alias dup='docker-compose stop && docker-compose up'
+alias drm='docker rm $(docker ps -aq)'
+alias drmi='docker rmi $(docker images -q)'
+alias dreset='docker system prune -a'
+
+# git
+alias gc="git checkout"
+alias gpo="git push origin"
+alias gm="git merge"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# Fast open
+alias o="open ."
+
+# PhpStorm
+alias phpstorm='open -a /Applications/PhpStorm.app "`pwd`"'
+
+# Show/hide hidden files in Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# IP addresses
+alias ip="ip4"
+alias ip4="dig @ns1.google.com TXT o-o.myaddr.l.google.com +short -4"
+alias ip6="dig @ns1.google.com TXT o-o.myaddr.l.google.com +short -6"
+alias localip="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Flush Directory Service cache
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+
+# Lock the screen
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Scrape webpage
+alias scrape="scrapeUrl"
+
+# Modern CLI tool aliases
+if command -v bat &> /dev/null; then
+    alias cat='bat --paging=never'
+    alias catt='bat'  # Original bat with paging
+fi
+
+if command -v bottom &> /dev/null; then
+    alias top='btm'
+    alias htop='btm'
+fi
+
+if command -v zoxide &> /dev/null; then
+    alias cd='z'  # Use zoxide for smarter cd
+fi
+
+# ripgrep alias (rg is already short enough)
+if command -v rg &> /dev/null; then
+    alias grep='rg'
+fi

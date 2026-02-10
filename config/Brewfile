@@ -1,0 +1,171 @@
+# Dotfiles Brewfile
+# Install with: brew bundle --file=~/.dotfiles/config/Brewfile
+# Generate from installed: brew bundle dump --force --file=~/.dotfiles/config/Brewfile
+
+# =============================================================================
+# CORE DEVELOPMENT TOOLS
+# =============================================================================
+
+# Version Control
+brew "git"
+brew "git-delta"        # Better git diffs
+brew "git-lfs"          # Git Large File Storage
+brew "git-secret"       # Encrypt files in git
+brew "gh"               # GitHub CLI
+
+# Languages & Runtimes
+brew "node"
+brew "php"
+brew "php@8.2"
+brew "python@3.14"
+brew "go"
+
+# Package Managers & Build Tools
+brew "composer"
+brew "cmake"
+brew "autoconf"
+brew "libtool"
+brew "pkg-config"
+brew "swig"
+
+# Node Version Management
+brew "nvm"
+
+# =============================================================================
+# DATABASES & DATA STORES
+# =============================================================================
+
+brew "mysql"
+brew "mongodb-community"
+brew "mongodb-database-tools"
+brew "mongosh"
+brew "sqlite"
+
+# =============================================================================
+# DEVOPS & INFRASTRUCTURE
+# =============================================================================
+
+# Container & Orchestration
+brew "docker"
+brew "docker-completion"
+brew "kubernetes-cli"
+brew "k9s"              # Kubernetes TUI
+
+# Cloud & Infrastructure
+brew "awscli"           # AWS CLI
+brew "doctl"            # DigitalOcean CLI
+brew "ansible"
+brew "terraform"        # If you use it (not currently installed, add if needed)
+
+# Networking & Monitoring
+brew "dnsmasq"
+brew "nmap"
+brew "net-snmp"
+brew "openvpn"
+
+# =============================================================================
+# MODERN CLI TOOLS (Rust rewrites & improvements)
+# =============================================================================
+
+brew "zoxide"           # Smarter cd (replaces z)
+brew "bat"              # Better cat with syntax highlighting
+brew "eza"              # Modern ls with icons
+brew "ripgrep"          # Faster grep
+brew "fd"               # Faster find
+brew "fzf"              # Fuzzy finder
+brew "bottom"           # Modern system monitor (htop alternative)
+brew "tree"             # Directory tree viewer
+brew "ncdu"             # NCurses Disk Usage
+
+# =============================================================================
+# FILE & DATA PROCESSING
+# =============================================================================
+
+brew "jq"               # JSON processor
+brew "yq"               # YAML processor
+brew "wget"
+brew "curl"
+brew "httpie"           # Better HTTP client
+brew "ack"              # Code search tool
+brew "rclone"           # Rsync for cloud storage
+brew "fswatch"          # File change monitor
+brew "parallel"         # Execute jobs in parallel
+brew "mackup"           # Backup application settings
+
+# =============================================================================
+# MEDIA & IMAGE PROCESSING
+# =============================================================================
+
+brew "imagemagick"
+brew "ffmpeg"
+
+# =============================================================================
+# TEXT & MARKUP
+# =============================================================================
+
+brew "aspell"           # Spell checker
+brew "tidy-html5"       # HTML validator
+
+# =============================================================================
+# MAIL & COMMUNICATION
+# =============================================================================
+
+brew "swaks"            # SMTP test tool
+
+# =============================================================================
+# SECURITY & ENCRYPTION
+# =============================================================================
+
+brew "gnupg"
+brew "openssl@3"
+cask "1password-cli"
+
+# =============================================================================
+# UTILITIES & MISC
+# =============================================================================
+
+brew "direnv"           # Per-directory environment variables
+brew "httrack"          # Website copier
+brew "md5sha1sum"       # Hash utilities
+brew "opencode"         # Open code editor from terminal
+
+# =============================================================================
+# ZSH
+# =============================================================================
+
+brew "zsh-autosuggestions"
+brew "bash"             # Updated bash
+
+# =============================================================================
+# DATABASES MIGRATION & TOOLS
+# =============================================================================
+
+brew "golang-migrate"   # Database migrations
+
+# =============================================================================
+# FONTS
+# =============================================================================
+
+cask "font-meslo-lg-nerd-font"
+
+# =============================================================================
+# GUI APPLICATIONS
+# =============================================================================
+
+cask "betterzip"        # Archive manager (includes QuickLook plugin)
+cask "suspicious-package"   # Inspect .pkg installers
+
+# Camera & Media
+cask "cameracontroller" # Camera control utility
+cask "codexbar"         # Menu bar utility
+
+# =============================================================================
+# QUICKLOOK PLUGINS
+# =============================================================================
+
+# Modern QuickLook alternatives (see QUICKLOOK_EXTENSIONS.md for details):
+cask "qlvideo"        # Add if you want video previews
+# Then install App Extensions manually from GitHub:
+# - SourceCodeSyntaxHighlight (replaces qlcolorcode)
+# - QLStephenSwift (replaces qlstephen)
+# - PreviewJson, PreviewYaml, etc.
