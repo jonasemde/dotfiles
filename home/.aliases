@@ -17,7 +17,7 @@ else
     alias ls='ls -laF'
     alias l="ls -laF"
 fi
-alias g="grep '|'' ./* -R"
+alias g="grep -R"
 alias wget="curl -O"
 alias h="cd ~/"
 alias s="cd ~/Sites/"

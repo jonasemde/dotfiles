@@ -108,6 +108,7 @@ if [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ]; then
 fi
 
 # Python - unversioned symlinks (python, pip instead of python3, pip3)
+# Note: Update version number when upgrading Python in Brewfile (e.g., 3.14 -> 3.15)
 export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
 
 # fzf - Fuzzy finder
@@ -124,9 +125,6 @@ fi
 if command -v hub &> /dev/null; then
     eval "$(hub alias -s)"
 fi
-
-# Add dotfiles bin to PATH
-export PATH="$HOME/.dotfiles/bin:$PATH"
 
 ###-tns-completion-start-###
 if [ -f ~/.tnsrc ]; then
@@ -146,57 +144,11 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 
-# Herd injected PHP 8.3 configuration.
-export HERD_PHP_83_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/83/"
-
-
-# Herd injected PHP 8.4 configuration.
-export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/"
-
-
-# Herd injected PHP 8.5 configuration.
+# Herd injected PHP configurations
 export HERD_PHP_85_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/85/"
-
-
-# Herd injected PHP 8.2 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/84/"
+export HERD_PHP_83_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/83/"
 export HERD_PHP_82_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/82/"
-
-
-# Herd injected PHP 8.1 configuration.
 export HERD_PHP_81_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/81/"
-
-
-# Herd injected PHP 8.0 configuration.
 export HERD_PHP_80_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/80/"
-
-
-# Herd injected PHP 7.4 configuration.
 export HERD_PHP_74_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/74/"
-
-
-# Herd injected PHP 8.4 configuration.
-export HERD_PHP_84_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/84/"
-
-
-# Herd injected PHP 8.5 configuration.
-export HERD_PHP_85_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/85/"
-
-
-# Herd injected PHP 8.3 configuration.
-export HERD_PHP_83_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/83/"
-
-
-# Herd injected PHP 8.2 configuration.
-export HERD_PHP_82_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/82/"
-
-
-# Herd injected PHP 8.1 configuration.
-export HERD_PHP_81_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/81/"
-
-
-# Herd injected PHP 8.0 configuration.
-export HERD_PHP_80_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/80/"
-
-
-# Herd injected PHP 7.4 configuration.
-export HERD_PHP_74_INI_SCAN_DIR="/Users/jonasemde/Library/Application Support/Herd/config/php/74/"

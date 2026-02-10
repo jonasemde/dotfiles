@@ -26,10 +26,6 @@ vu() {
         valet use php
     else
         valet use php@$1
-        # Update PHP memory limit if config file exists
-        if [ -f "/opt/homebrew/etc/php/$1/conf.d/php-memory-limits.ini" ]; then
-            sed -i '' "s/128M/512M/g" /opt/homebrew/etc/php/$1/conf.d/php-memory-limits.ini
-        fi
     fi
     rm -Rf ~/.composer/vendor
     composer global update
