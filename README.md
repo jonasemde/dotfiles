@@ -40,7 +40,6 @@ bin/install
 
 ### Modern CLI Tools
 
-- **fnm** - Fast Node.js version manager
 - **bat** - Cat with syntax highlighting
 - **eza** - Modern ls replacement with icons
 - **ripgrep** - Fast grep alternative
@@ -54,13 +53,19 @@ bin/install
 
 - **PHP** - Managed by Laravel Herd
 - **Composer** - Dependency manager via Homebrew
-- **Node.js** - LTS version managed via fnm
+- **Node.js** - LTS version managed via nvm
+- **Python** - Version 3.14 via Homebrew
+- **Go** - Latest version via Homebrew
 - **MySQL** - Database with auto-start
-- **Mailhog** - Email testing tool
+- **MongoDB** - NoSQL database
 
 ### QuickLook Plugins
 
-Instant file previews in Finder: code files, markdown, JSON, CSV, patches, and archives.
+- **qlvideo** - Video file previews
+- **betterzip** - Archive manager with QuickLook support
+- **suspicious-package** - Inspect .pkg installers
+
+Note: Modern macOS uses App Extensions. For syntax highlighting and other features, install from GitHub.
 
 ---
 
@@ -158,14 +163,14 @@ bin/update          # Update all packages and tools
 
 ## Version Management
 
-### Node.js (via fnm)
+### Node.js (via nvm)
 
 ```bash
-fnm install --lts     # Install latest LTS
-fnm use lts-latest    # Use latest LTS
-fnm install 20        # Install specific version
-fnm use 20            # Switch to specific version
-fnm list              # Show installed versions
+nvm install --lts     # Install latest LTS
+nvm use --lts         # Use latest LTS
+nvm install 20        # Install specific version
+nvm use 20            # Switch to specific version
+nvm list              # Show installed versions
 ```
 
 ### PHP (via Herd)
@@ -185,10 +190,13 @@ brew bundle --file=~/.dotfiles/config/Brewfile
 
 **Complete package list in `config/Brewfile`:**
 
-- **Core**: git, node, php, composer, wget, httpie, hub, gh, ack, mysql, yarn, mackup, httrack, mailhog
-- **Modern CLI**: zoxide, bat, eza, ripgrep, fd, git-delta, fnm, fzf, direnv, jq, yq, bottom
+- **Core**: git, gh, node, python@3.14, go, composer, wget, curl, httpie, ack
+- **Databases**: mysql, mongodb-community, sqlite
+- **DevOps**: docker, kubernetes-cli, k9s, awscli, doctl, ansible, terraform
+- **Modern CLI**: zoxide, bat, eza, ripgrep, fd, git-delta, fzf, direnv, jq, yq, bottom
+- **Version Managers**: nvm
 - **Fonts**: font-meslo-lg-nerd-font (powerline icons and modern glyphs)
-- **QuickLook**: qlcolorcode, qlstephen, qlmarkdown, quicklook-json, qlprettypatch, quicklook-csv, betterzip, suspicious-package
+- **Apps**: betterzip, suspicious-package, cameracontroller, codexbar, qlvideo, 1password-cli
 
 ---
 
@@ -320,7 +328,6 @@ Variables load when you enter the directory and unload when you leave.
 | Old Tool | New Tool | Why Better |
 |----------|----------|------------|
 | z.sh | zoxide | Smarter frecency algorithm, Rust speed |
-| nvm | fnm | 40x faster, simpler, Rust-based |
 | cat | bat | Syntax highlighting, git integration |
 | ls | eza | Icons, tree view, git status |
 | grep | ripgrep | 5-10x faster, respects .gitignore |
@@ -347,7 +354,7 @@ If upgrading from an older setup:
 
 1. **Directory structure**: Files moved from `shell/` to `home/` directory
 2. **Directory history**: Run `migration/migrate-z-to-zoxide.sh` to import your `~/.z` data
-3. **Version managers**: fnm manages Node.js (if not using Herd's node)
+3. **Version managers**: nvm manages Node.js
 4. **Fonts**: Meslo Nerd Font installed via Brewfile
 5. **Claude Code**: Now version-controlled in `config/claude/` and symlinked
 6. **Custom Theme**: Custom agnoster theme stored in `oh-my-zsh-custom/themes/`
