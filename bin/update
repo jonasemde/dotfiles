@@ -2,17 +2,21 @@
 #
 # Update dotfiles and tools
 
-set -e
-
 # Colors
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 NC='\033[0m'
 
 step() { echo -e "${BLUE}➜${NC} $1"; }
 success() { echo -e "${GREEN}✓${NC} $1"; }
 warn() { echo -e "${YELLOW}⚠${NC} $1"; }
+error() { echo -e "${RED}✗${NC} $1"; }
+
+# Track failures
+declare -a FAILURES=()
+declare -a SUCCESSES=()
 
 echo ""
 step "Updating dotfiles"
@@ -20,32 +24,97 @@ echo ""
 
 # Update dotfiles repo
 step "Pulling latest changes"
-git -C ~/.dotfiles pull origin master
-success "Dotfiles updated"
+if git -C ~/.dotfiles pull origin master; then
+    success "Dotfiles updated"
+    SUCCESSES+=("Dotfiles")
+else
+    error "Failed to update dotfiles"
+    FAILURES+=("Dotfiles")
+fi
 
 # Update Homebrew and packages
 step "Updating Homebrew packages"
-brew update
-brew upgrade
-brew bundle --file=~/.dotfiles/config/Brewfile
-brew cleanup
-success "Homebrew packages updated"
+if brew update; then
+    brew upgrade 2>&1 | grep -v "^Warning:" || true
+
+    # Run brew bundle and capture output
+    BUNDLE_OUTPUT=$(brew bundle --file=~/.dotfiles/config/Brewfile 2>&1)
+    BUNDLE_EXIT=$?
+
+    # Check if there were linking errors
+    if echo "$BUNDLE_OUTPUT" | grep -q "Error: Could not symlink"; then
+        warn "Detected symlink conflicts, attempting to fix..."
+
+        # Extract package names that failed to link
+        FAILED_PACKAGES=$(echo "$BUNDLE_OUTPUT" | grep "Installing" | grep "has failed" | sed 's/Installing \(.*\) has failed.*/\1/')
+
+        # Try to overwrite links for failed packages
+        for pkg in $FAILED_PACKAGES; do
+            step "Fixing symlinks for $pkg"
+            brew link --overwrite "$pkg" 2>&1 | grep -v "^Warning:" || true
+        done
+
+        # Retry brew bundle
+        step "Retrying brew bundle"
+        brew bundle --file=~/.dotfiles/config/Brewfile
+        BUNDLE_EXIT=$?
+    fi
+
+    if [ $BUNDLE_EXIT -eq 0 ]; then
+        brew cleanup 2>&1 | grep -v "^Warning:" || true
+        success "Homebrew packages updated"
+        SUCCESSES+=("Homebrew")
+    else
+        error "Homebrew bundle had errors (some packages may have failed)"
+        FAILURES+=("Homebrew")
+    fi
+else
+    error "Failed to update Homebrew"
+    FAILURES+=("Homebrew")
+fi
 
 # Update global npm packages
 step "Updating global npm packages"
-npm update -g
-success "npm packages updated"
+if npm update -g 2>&1 | grep -v "^npm warn deprecated" || true; then
+    success "npm packages updated"
+    SUCCESSES+=("npm")
+else
+    error "Failed to update npm packages"
+    FAILURES+=("npm")
+fi
 
 # Update global Composer packages
 if command -v composer &>/dev/null; then
     step "Updating global Composer packages"
-    composer global update
-    success "Composer packages updated"
+    if composer global update 2>&1 | grep -v "^Composer could not detect the root package" || true; then
+        success "Composer packages updated"
+        SUCCESSES+=("Composer")
+    else
+        error "Failed to update Composer packages"
+        FAILURES+=("Composer")
+    fi
+else
+    warn "Composer not found, skipping"
 fi
 
-# Reload shell config
+# Summary
 echo ""
-success "Update complete!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+if [ ${#FAILURES[@]} -eq 0 ]; then
+    success "Update complete! All components updated successfully."
+    echo ""
+    echo -e "   ${GREEN}✓${NC} ${SUCCESSES[*]}"
+else
+    warn "Update complete with some failures"
+    echo ""
+    if [ ${#SUCCESSES[@]} -gt 0 ]; then
+        echo -e "   ${GREEN}✓${NC} Succeeded: ${SUCCESSES[*]}"
+    fi
+    if [ ${#FAILURES[@]} -gt 0 ]; then
+        echo -e "   ${RED}✗${NC} Failed: ${FAILURES[*]}"
+    fi
+fi
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 warn "Restart your terminal or run: exec zsh"
 echo ""
