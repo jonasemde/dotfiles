@@ -25,7 +25,14 @@ echo ""
 # Install Claude Code
 step "Installing Claude Code CLI"
 if command -v claude &>/dev/null; then
-    warn "Claude Code already installed"
+    CLAUDE_PATH=$(which claude)
+    if [[ "$CLAUDE_PATH" == *"homebrew"* ]]; then
+        warn "Claude Code already installed via Homebrew"
+    elif [[ "$CLAUDE_PATH" == *".local"* ]] || [[ "$CLAUDE_PATH" == *"npm"* ]]; then
+        warn "Claude Code already installed via npm"
+    else
+        warn "Claude Code already installed at $CLAUDE_PATH"
+    fi
 else
     # Try Homebrew first (modern)
     if command -v brew &>/dev/null; then
