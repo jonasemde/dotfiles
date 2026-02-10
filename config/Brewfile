@@ -51,7 +51,7 @@ brew "k9s"              # Kubernetes TUI
 brew "awscli"           # AWS CLI
 brew "doctl"            # DigitalOcean CLI
 brew "ansible"
-brew "terraform"        # If you use it (not currently installed, add if needed)
+# brew "terraform"        # If you use it (not currently installed, add if needed)
 
 # Networking & Monitoring
 brew "dnsmasq"
