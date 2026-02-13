@@ -42,10 +42,10 @@ CONFIGURATION:
 
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/zsh</string>
+        <string>/bin/bash</string>
         <string>-l</string>
         <!-- TODO: Replace /ABSOLUTE/PATH/TO/HOME with your actual home directory (e.g., /Users/yourusername) -->
-        <string>/ABSOLUTE/PATH/TO/HOME/.dotfiles/bin/daily-updates.sh</string>
+        <string>/ABSOLUTE/PATH/TO/HOME/.dotfiles/bin/update</string>
     </array>
 
     <key>StartCalendarInterval</key>

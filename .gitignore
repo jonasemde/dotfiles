@@ -24,7 +24,6 @@ Temporary Items
 
 # User-specific files with hardcoded paths (use .template versions)
 com.user.daily-updates.plist
-bin/daily-updates.sh
 
 # Claude Code settings
 .claude/settings.local.json

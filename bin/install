@@ -143,12 +143,6 @@ if [ -f ~/.dotfiles/com.user.daily-updates.plist.template ]; then
     cp ~/.dotfiles/com.user.daily-updates.plist.template ~/.dotfiles/com.user.daily-updates.plist
     sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" ~/.dotfiles/com.user.daily-updates.plist
 
-    if [ -f ~/.dotfiles/bin/daily-updates.sh.template ]; then
-        cp ~/.dotfiles/bin/daily-updates.sh.template ~/.dotfiles/bin/daily-updates.sh
-        sed -i '' "s|/ABSOLUTE/PATH/TO/HOME|$HOME|g" ~/.dotfiles/bin/daily-updates.sh
-        chmod +x ~/.dotfiles/bin/daily-updates.sh
-    fi
-
     mkdir -p ~/Library/LaunchAgents
     cp ~/.dotfiles/com.user.daily-updates.plist ~/Library/LaunchAgents/
     launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.daily-updates.plist 2>/dev/null || warn "LaunchAgent already loaded or bootstrap failed"
