@@ -1,9 +1,4 @@
 {
-  "enabledPlugins": {
-    "laravel-simplifier@laravel": true,
-    "agent-browser@agent-browser": true
-  },
-  "alwaysThinkingEnabled": true,
   "permissions": {
     "allow": [
       "Skill(ray-skill:*)",
@@ -59,5 +54,11 @@
       "mcp__chrome-devtools__*"
     ],
     "defaultMode": "acceptEdits"
-  }
+  },
+  "enabledPlugins": {
+    "laravel-simplifier@laravel": true,
+    "agent-browser@agent-browser": true
+  },
+  "alwaysThinkingEnabled": true,
+  "model": "opus[1m]"
 }
