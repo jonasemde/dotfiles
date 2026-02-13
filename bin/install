@@ -65,6 +65,7 @@ step "Configuring Git"
 ln -sf ~/.dotfiles/home/.gitconfig ~/.gitconfig
 ln -sf ~/.dotfiles/home/.global-gitignore ~/.global-gitignore
 git config --global core.excludesfile ~/.global-gitignore
+git -C ~/.dotfiles config --local core.hooksPath .githooks
 success "Git configured"
 
 # Symlinks
