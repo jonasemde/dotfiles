@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# Pre-commit hook: normalize Herd-injected lines in home/.zshrc
+#
+# Herd injects PHP INI_SCAN_DIR exports and PATH entries using absolute
+# home directory paths. This hook rewrites them to use $HOME and removes
+# duplicate entries before the commit goes through.
+
+ZSHRC="home/.zshrc"
+
+# Only act when .zshrc is staged
+if ! git diff --cached --name-only | grep -qx "$ZSHRC"; then
+    exit 0
+fi
+
+TMPFILE=$(mktemp)
+trap 'rm -f "$TMPFILE"' EXIT
+
+# Get the staged content
+git show ":$ZSHRC" > "$TMPFILE"
+
+CHANGED=0
+
+# Replace absolute home path with $HOME in Herd lines
+if grep -q "$HOME/Library/Application Support/Herd" "$TMPFILE"; then
+    HOME_ESCAPED=$(printf '%s\n' "$HOME" | sed 's/[&/\]/\\&/g')
+    sed -i '' "s|$HOME_ESCAPED/Library/Application Support/Herd|\$HOME/Library/Application Support/Herd|g" "$TMPFILE"
+    CHANGED=1
+fi
+
+# Remove Herd's per-version comment lines (e.g. "# Herd injected PHP 8.5 configuration.")
+if grep -qE '^# Herd injected PHP [0-9]+\.[0-9]+ configuration\.' "$TMPFILE"; then
+    sed -i '' '/^# Herd injected PHP [0-9][0-9]*\.[0-9][0-9]* configuration\.$/d' "$TMPFILE"
+    CHANGED=1
+fi
+
+# Deduplicate HERD_PHP_*_INI_SCAN_DIR exports (keep first occurrence)
+if [ "$(grep -c 'HERD_PHP_.*_INI_SCAN_DIR' "$TMPFILE")" -gt \
+     "$(grep 'HERD_PHP_.*_INI_SCAN_DIR' "$TMPFILE" | sort -u | wc -l)" ]; then
+    SEEN=""
+    DEDUP=$(mktemp)
+    while IFS= read -r line; do
+        KEY=$(printf '%s' "$line" | grep -oE 'HERD_PHP_[0-9]+_INI_SCAN_DIR' || true)
+        if [ -n "$KEY" ]; then
+            if printf '%s' "$SEEN" | grep -qx "$KEY"; then
+                continue
+            fi
+            SEEN="$SEEN
+$KEY"
+        fi
+        printf '%s\n' "$line"
+    done < "$TMPFILE" > "$DEDUP"
+    mv "$DEDUP" "$TMPFILE"
+    CHANGED=1
+fi
+
+# Deduplicate Herd PATH line
+HERD_PATH='export PATH="$HOME/Library/Application Support/Herd/bin/"'
+if [ "$(grep -cF "$HERD_PATH" "$TMPFILE")" -gt 1 ]; then
+    # Keep first, remove subsequent
+    FIRST=1
+    DEDUP=$(mktemp)
+    while IFS= read -r line; do
+        if printf '%s' "$line" | grep -qF "$HERD_PATH"; then
+            if [ "$FIRST" -eq 1 ]; then
+                FIRST=0
+                printf '%s\n' "$line"
+            fi
+        else
+            printf '%s\n' "$line"
+        fi
+    done < "$TMPFILE" > "$DEDUP"
+    mv "$DEDUP" "$TMPFILE"
+    CHANGED=1
+fi
+
+# Collapse 3+ consecutive blank lines to 2
+if grep -qzP '\n{4,}' "$TMPFILE" 2>/dev/null; then
+    awk 'NF{blank=0} !NF{blank++} blank<=2' "$TMPFILE" > "$TMPFILE.clean"
+    mv "$TMPFILE.clean" "$TMPFILE"
+    CHANGED=1
+fi
+
+# Ensure file ends with a single newline
+if [ -n "$(tail -c 1 "$TMPFILE")" ]; then
+    printf '\n' >> "$TMPFILE"
+    CHANGED=1
+fi
+
+if [ "$CHANGED" -eq 1 ]; then
+    # Update the working tree and re-stage
+    cp "$TMPFILE" "$ZSHRC"
+    git add "$ZSHRC"
+    echo "pre-commit: normalized Herd paths in $ZSHRC"
+fi
