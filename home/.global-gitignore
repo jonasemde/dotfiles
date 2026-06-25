@@ -24,3 +24,5 @@ yarn-error.log
 
 # Envoy error files
 Envoy[A-Za-z0-9]*.php
+
+**/.claude/settings.local.json

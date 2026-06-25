@@ -142,3 +142,88 @@ function emptytrash() {
         echo "Canceled."
     fi
 }
+
+# Fast commit
+function commit() {
+    claude -p --model haiku "$(cat <<'EOF'
+**Task:** Analyze all **uncommitted** changes, group them logically, and **create commits directly** using `git`. Do **not** output messages only—actually run the commits.
+
+## Formatting Rules (must enforce)
+* **Header format:** `<type>(<scope>): <subject>`
+  * `type` (required): one of `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`, `build`, `revert`
+  * `scope` (optional): a noun describing the area (e.g., `parser`, `auth`, `api`, `ui`)
+  * `subject` (required): **imperative, present tense**, **lowercase first letter**, **no trailing period**
+* **Body (optional):** add context/motivation; **imperative, present tense**. Begin **after one blank line**.
+* **Footer (optional):** references and/or breaking changes; begin **after one blank line**.
+  * **Breaking changes:** either `!` in header (e.g., `feat(api)!: …`) **or** a footer starting with `BREAKING CHANGE:` followed by description.
+* **Line length:** **No line may exceed 100 characters** (wrap body/footer lines accordingly).
+
+## SemVer Mapping
+* `fix:` → **PATCH**
+* `feat:` → **MINOR**
+* `BREAKING CHANGE` (any type) → **MAJOR**
+
+## Reverts
+* Use type `revert:` and header of the reverted commit.
+* Body must include: `This reverts commit <SHA>.`
+
+## Grouping Policy
+* **Group related changes** into **one** commit.
+* **Split unrelated changes** into **separate** commits.
+
+## Prohibited content (hard block)
+* **Do not include** any generator notes, links, emojis, watermarks, or promotional text.
+* **Do not include** trailers like `Co-Authored-By`, `Signed-off-by`, `Reviewed-by`, or similar.
+* **Do not include** author/creator references of any kind.
+
+## Execution Steps (perform, don’t describe)
+1. **Assess & group** unstaged/unstashed diffs into coherent change sets.
+2. For each group:
+   * Stage only the matching files/hunks (e.g., `git add -p` or file lists).
+   * Build the commit message enforcing all rules above and the 100-char limit per line.
+   * Commit directly, e.g.:
+     * Header only:
+       ```bash
+       git commit -m "fix(parser): handle null input"
+       ```
+     * Header + Body:
+       ```bash
+       git commit -m "feat(auth): add 2fa support" \
+                   -m "introduce time-based one-time passwords for login security."
+       ```
+     * Breaking change via footer:
+       ```bash
+       git commit -m "chore!: drop node 14 support" \
+                   -m "" \
+                   -m "BREAKING CHANGE: minimum runtime is now node 18."
+       ```
+     * Revert:
+       ```bash
+       git commit -m "revert: feat(api): enable beta endpoints" \
+                   -m "This reverts commit <SHA>."
+       ```
+3. **If all changes belong to one larger modification**, create **one single commit**.
+4. Ensure **no prohibited trailers** or branding are present in any commit message.
+
+## Examples (valid)
+`feat(lang): add polish language`
+`fix(api): prevent null pointer on empty profile`
+`refactor(ui): extract modal component`
+`perf(db): reduce user lookup from O(n) to O(log n)`
+
+```
+feat(api)!: rename /v1/users endpoint to /v2/accounts
+BREAKING CHANGE: client integrations must use /v2/accounts with updated payload schema.
+```
+
+```
+revert: feat(cart): enable server-side promotions
+This reverts commit 676104e.
+```
+
+---
+
+**Execute now** according to the steps above. Do not include any extra output beyond what is necessary to perform the commits.
+EOF
+)"
+}
