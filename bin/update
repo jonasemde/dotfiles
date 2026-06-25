@@ -73,6 +73,16 @@ else
     FAILURES+=("Homebrew")
 fi
 
+# Update macOS software
+step "Updating macOS software"
+if softwareupdate --all --install --force 2>&1; then
+    success "macOS software updated"
+    SUCCESSES+=("macOS")
+else
+    error "Failed to update macOS software"
+    FAILURES+=("macOS")
+fi
+
 # Update global npm packages
 step "Updating global npm packages"
 if npm update -g 2>&1 | grep -v "^npm warn deprecated" || true; then

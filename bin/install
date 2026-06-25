@@ -76,7 +76,7 @@ for file in ~/.zshrc ~/.vimrc ~/.vim ~/.bash_profile ~/.profile; do
     if [ -e "$file" ] && [ ! -L "$file" ]; then
         mkdir -p "$BACKUP_DIR"
         cp -r "$file" "$BACKUP_DIR/"
-        info "Backed up $(basename $file) to $BACKUP_DIR"
+        success "Backed up $(basename $file) to $BACKUP_DIR"
     fi
 done
 rm -f ~/.zshrc ~/.vimrc ~/.vim ~/.bash_profile ~/.profile
