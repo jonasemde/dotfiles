@@ -53,12 +53,18 @@
       "mcp__laravel-boost__*",
       "mcp__chrome-devtools__*"
     ],
+    "deny": [
+      "EnterWorktree"
+    ],
     "defaultMode": "acceptEdits"
   },
+  "model": "haiku",
   "enabledPlugins": {
     "laravel-simplifier@laravel": true,
     "agent-browser@agent-browser": true
   },
   "alwaysThinkingEnabled": true,
-  "model": "opus[1m]"
+  "effortLevel": "high",
+  "skipWorkflowUsageWarning": true,
+  "agentPushNotifEnabled": true
 }
