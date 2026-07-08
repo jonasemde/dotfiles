@@ -160,7 +160,7 @@ cask "codexbar"         # Menu bar utility
 # =============================================================================
 
 # Modern QuickLook alternatives (see QUICKLOOK_EXTENSIONS.md for details):
-cask "qlvideo"        # Add if you want video previews
+cask "quicklook-video"        # Add if you want video previews
 # Then install App Extensions manually from GitHub:
 # - SourceCodeSyntaxHighlight (replaces qlcolorcode)
 # - QLStephenSwift (replaces qlstephen)
