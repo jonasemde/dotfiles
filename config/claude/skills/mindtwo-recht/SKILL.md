@@ -1,3 +1,4 @@
+---
 name: mindtwo-recht
 description: >
   Fachanwaltlicher Sparringpartner fuer IT-Recht, Datenschutz,

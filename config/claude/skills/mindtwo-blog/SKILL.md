@@ -1,3 +1,4 @@
+---
 name: mindtwo-blog
 description: >
   Erstellt SEO-optimierte, redaktionelle Blogartikel auf Deutsch
