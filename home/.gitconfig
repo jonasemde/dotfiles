@@ -1,54 +1,238 @@
+# ==============================================================================
+#  Global Git configuration – Jonas Emde (mindtwo GmbH)
+#  Location: ~/.gitconfig
+#  Requires Git 2.37 or newer (check with: git --version)
+# ==============================================================================
+
+
+# ------------------------------------------------------------------------------
+#  Identity
+# ------------------------------------------------------------------------------
 [user]
+	# Never let Git guess name/email from the system – only use what's set here
+	# (or in a repo's local config). Prevents commits with wrong identities.
 	useConfigOnly = true
 	name = Jonas Emde
 	email = emde@mindtwo.de
-[color]
-	ui = true
+
+	# Optional: SSH key used to sign commits (see [gpg] and [commit] below)
+	signingkey = ~/.ssh/id_ed25519.pub
+
+
+# ------------------------------------------------------------------------------
+#  Commit signing (optional)
+#  Shows the "Verified" badge on GitHub and proves who authored a commit.
+#  To activate:
+#    1. Uncomment "signingkey" under [user] above
+#    2. Uncomment the [gpg] block below and "gpgsign" under [commit]
+#    3. Upload the same public key on GitHub as a *Signing Key*
+#       (Settings → SSH and GPG keys → New SSH key → Key type: Signing Key)
+# ------------------------------------------------------------------------------
+[gpg]
+	format = ssh
+
+
+# ------------------------------------------------------------------------------
+#  Core behavior
+# ------------------------------------------------------------------------------
 [core]
+	# Open VS Code for commit messages, rebase todo lists etc. and wait until
+	# the tab is closed
 	editor = code -w
-	excludesfile = /Users/jonasemde/.global-gitignore
-    ignorecase = false
+
+	# Global ignore file for OS/editor clutter (.DS_Store, .idea, .vscode …)
+	excludesfile = ~/.global-gitignore
+
+	# Note: core.ignorecase is intentionally NOT set here. Git detects the
+	# case-insensitive macOS file system per repo on clone/init. For case-only
+	# renames use: git mv oldName.php OldName.php
+
+
+[init]
+	# New repositories start with "main" instead of "master"
+	defaultBranch = main
+
+
+# ------------------------------------------------------------------------------
+#  Output & display
+# ------------------------------------------------------------------------------
+[color]
+	# Colored output in the terminal
+	ui = true
+
+[column]
+	# Show branch/tag lists in columns when there are many entries
+	ui = auto
+
+[branch]
+	# "git branch" lists the most recently used branches first
+	sort = -committerdate
+
+[tag]
+	# Sort tags as versions: v1.9 < v1.10 (instead of alphabetical)
+	sort = version:refname
+
+[help]
+	# On typos like "git stauts", suggest the right command and ask before
+	# running it
+	autocorrect = prompt
+
+
+# ------------------------------------------------------------------------------
+#  Committing
+# ------------------------------------------------------------------------------
+[commit]
+	# Show the full diff below the message in the editor while writing a commit
+	verbose = true
+
+	# Optional: sign every commit (see "Commit signing" above)
+	gpgsign = true
+
+
+# ------------------------------------------------------------------------------
+#  Syncing with remotes
+# ------------------------------------------------------------------------------
+[fetch]
+	# Remove local references to branches that were deleted on the remote
+	prune = true
+
+[pull]
+	# "git pull" rebases local commits on top of the remote instead of creating
+	# merge commits – keeps history linear, matches the team's rebase workflow
+	rebase = true
+
+[push]
+	# First push of a new branch sets the upstream automatically
+	# (no more "git push -u origin my-branch")
+	autoSetupRemote = true
+
+	# Push annotated tags that belong to the pushed commits
+	followTags = true
+
+[rebase]
+	# Stash uncommitted changes before a rebase and restore them afterwards
+	autoStash = true
+
+[rerere]
+	# "Reuse recorded resolution": Git remembers how a conflict was resolved
+	# and applies the same fix automatically next time (very handy when
+	# rebasing the same branch repeatedly)
+	enabled = true
+
+
+# ------------------------------------------------------------------------------
+#  Diff & merge
+# ------------------------------------------------------------------------------
 [diff]
+	# External diff tool for "git difftool"
 	tool = diffmerge
+
+	# Smarter diff algorithm – produces cleaner, more readable diffs
+	algorithm = histogram
+
+	# Moved code blocks get their own color instead of showing as
+	# deleted + added
+	colorMoved = default
+
+	# Label diff sides by meaning (i/ index, w/ working tree, c/ commit)
+	# instead of the generic a/ and b/
+	mnemonicPrefix = true
+
 [difftool "diffmerge"]
 	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+
 [merge]
+	# External merge tool for "git mergetool"
 	tool = diffmerge
+
+	# Conflict markers also show the original (base) version, which makes it
+	# much easier to see what both sides actually changed
+	conflictStyle = zdiff3
+
+[mergetool]
+	# Keep a .orig backup of conflicted files after resolving
+	keepBackup = true
+
 [mergetool "diffmerge"]
+	# Falls back to $LOCAL as base if no common ancestor exists
 	cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
 	trustExitCode = true
+
+
+# ------------------------------------------------------------------------------
+#  Log formats
+# ------------------------------------------------------------------------------
 [pretty]
+	# Usage: git log --pretty=custom
 	custom = "%C(magenta)%h%C(red)%d %C(yellow)%ar %C(green)%s %C(yellow)(%an)"
-    #                     │        │            │            │             └─ author name
-    #                     │        │            │            └─ message
-    #                     │        │            └─ date (relative)
-    #                     │        └─ decorations (branch, heads or tags)
-    #                     └─ hash (abbreviated)
+	#                     │        │            │            │             └─ author name
+	#                     │        │            │            └─ message
+	#                     │        │            └─ date (relative)
+	#                     │        └─ decorations (branch, heads or tags)
+	#                     └─ hash (abbreviated)
+
+
+# ------------------------------------------------------------------------------
+#  Aliases
+# ------------------------------------------------------------------------------
 [alias]
+	# --- Everyday shortcuts ---------------------------------------------------
+
+	# Commit all tracked changes with a message: git c "Fix login redirect"
+	# (new, untracked files still need "git add" first)
 	c  = commit -am
+
+	# Pull (rebases thanks to pull.rebase above)
 	up = pull
+
 	p  = push
 	s  = status
 	co = checkout
-	cp = cherry-pick
-	df = diff --color --color-words --abbrev
-	l  = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 
-	# Show the diff between the latest commit and the current state
+	# Switch branches (modern replacement for checkout): git sw feature/xyz
+	sw = switch
+
+	cp = cherry-pick
+
+	# --- Rewriting history safely ---------------------------------------------
+
+	# Safe force push after a rebase: refuses if someone else pushed to the
+	# branch in the meantime. Use this instead of "git push --force".
+	pf = push --force-with-lease --force-if-includes
+
+	# Add staged changes to the last commit without editing its message
+	amend = commit --amend --no-edit
+
+	# Undo the last commit but keep its changes staged
+	undo = reset --soft HEAD~1
+
+	# --- Diffs ----------------------------------------------------------------
+
+	# Word-level diff instead of whole lines
+	df = diff --color --color-words --abbrev
+
+	# Diff between the latest commit and the current state, with stats
 	d  = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
 
+	# --- History --------------------------------------------------------------
+
+	# Compact graph log with hash, branches, message, date and author
+	l  = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+
+	# Changelog of all commits since the last tag, as a markdown list
 	# See https://johnblackbourn.com/git-changelog-generator
 	changelog = "!_() { t=$(git describe --abbrev=0 --tags); git log ${t}..HEAD --no-merges --pretty=format:'* %s'; }; _"
+
+	# CSV-like log: hash, committer name, email, relative date, message
 	clog = log --pretty="%h, %cn, %ce, %cr, %s"
-[mergetool]
-	keepBackup = true
-[filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+
+
+# ------------------------------------------------------------------------------
+#  Git LFS (large files like images, videos, PDFs)
+#  Managed by "git lfs install" – don't edit manually
+# ------------------------------------------------------------------------------
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[fetch]
-	prune = true
