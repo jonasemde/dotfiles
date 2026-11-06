@@ -56,15 +56,28 @@
     "deny": [
       "EnterWorktree"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
-  "model": "haiku",
+  "model": "opus",
   "enabledPlugins": {
     "laravel-simplifier@laravel": true,
-    "agent-browser@agent-browser": true
+    "agent-browser@agent-browser": true,
+    "mindtwo-global@mindtwo-marketplace": true,
+    "mindtwo-dev@mindtwo-marketplace": true,
+    "postman@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "mindtwo-marketplace": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/jonasemde/Sites/claude-plugins"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true
 }
