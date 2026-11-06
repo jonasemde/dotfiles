@@ -152,3 +152,13 @@ export HERD_PHP_82_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/p
 export HERD_PHP_81_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/81/"
 export HERD_PHP_80_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/80/"
 export HERD_PHP_74_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/74/"
+
+# Added by MiniMax Code
+export PATH="/Users/jonasemde/.mavis/bin:$PATH"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/jonasemde/.local/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/jonasemde/.antigravity-ide/antigravity-ide/bin:$PATH"
