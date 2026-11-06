@@ -126,6 +126,14 @@ brew "md5sha1sum"       # Hash utilities
 brew "opencode"         # Open code editor from terminal
 
 # =============================================================================
+# AI & AGENTIC TOOLS
+# =============================================================================
+
+cask "antigravity"      # Google Antigravity 2 - agent orchestration desktop app (native Apple Silicon)
+cask "antigravity-cli"  # Antigravity CLI - terminal interface for agents (installs `agy` binary)
+# cask "antigravity-ide"  # VS Code-fork IDE variant, enable if you want the editor too
+
+# =============================================================================
 # ZSH
 # =============================================================================
 
