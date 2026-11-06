@@ -153,6 +153,19 @@ export HERD_PHP_81_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/p
 export HERD_PHP_80_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/80/"
 export HERD_PHP_74_INI_SCAN_DIR="$HOME/Library/Application Support/Herd/config/php/74/"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Added by MiniMax Code
 export PATH="/Users/jonasemde/.mavis/bin:$PATH"
 
@@ -162,3 +175,8 @@ export PATH="/Users/jonasemde/.local/bin:$PATH"
 
 # Added by Antigravity IDE
 export PATH="/Users/jonasemde/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Lokale, nicht versionierte Overrides (Secrets, Tokens, maschinenspezifisch).
+# Diese Datei liegt bewusst AUSSERHALB von ~/.dotfiles (git-Repo ist öffentlich!)
+# und wird daher nie committed/gepusht.
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
